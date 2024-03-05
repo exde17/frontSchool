@@ -2,6 +2,20 @@
     height: 400px;
     padding: 40px;
 
+
+    .datatable-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 200px); /* Ajusta la altura según sea necesario */
+    }
+      
+    .datatable-container p {
+        font-size: 18px;
+        color: #666;
+    }
+
+
     .table{
         margin: 10px;
         padding: 20px;

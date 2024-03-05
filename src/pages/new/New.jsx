@@ -29,19 +29,7 @@ const New = () => {
   //Estado de la imagen de perfil
   const [ file, setFile ] = useState("");
   
-  // Se crean los estados de los Check List
-  const [option, setOption] = useState("");
-    const handleOption = (event) =>{
-    setOption(event.target.value);
-  };
-
-  const [optionCC, setOptionCC] = useState("");
-    const handleOptionCC = (event) =>{
-    setOptionCC(event.target.value);
-  };
-
-  //
-
+  
   const [ formData, setFormData] = useState({
     
     nombre: "",
@@ -49,15 +37,17 @@ const New = () => {
     fechaNacimiento: "",
     tipoIdentificacion: "",
     identificacion: "",
-    //genero check box
+    genero: "",
     email: "",
     telefono: "",
-    departamentoId: "",
-    ciudadId: "",
+    departamento: "",
+    ciudad: "",
+    /* 
     barrioId: "",
     corregimientoId: "",
-    veredald: "",
-    comunald: "",
+    veredaId: "",
+    comunaId: "",
+  */
 
   });
   
@@ -66,8 +56,8 @@ const New = () => {
     setFormData({...formData, [name]: value});
   };
   
+
   const handleSubmit = async (event,) => {
-    console.log('token persona', token)
     event.preventDefault();
     
     try {
@@ -91,9 +81,9 @@ const New = () => {
       // Enviar formDataToSend al endpoint
       const API_URL = 'https://render-school.onrender.com/api/persona';
       const response = await axios.post(API_URL, formDataToSend, {
-        //_________________________
         headers: {
           Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
+          'Content-Type': 'application/json' // Especifica el tipo de contenido como JSON
         },
         //_________________________
         // Aquí puedes enviar los datos que deseas al endpoint
@@ -109,29 +99,25 @@ const New = () => {
       // Restablecer los campos del formulario después de enviarlos
       setFormData({
 
-
         nombre: "",
         apellido: "",
         fechaNacimiento: "",
         tipoIdentificacion: "",
         identificacion: "",
-        //genero check box
+        genero: "",
         email: "",
         telefono: "",
-        departamentoId: "",
-        ciudadId: "",
+        departamento: "",
+        ciudad: "",
+        /* 
         barrioId: "",
         corregimientoId: "",
-        veredald: "",
-        comunald: "",
+        veredaId: "",
+        comunaId: "",
+      */
         
       });
-      /* 
-      setOption("");
-      setOptionCC("");
-      setDocument(null);
-      setFile("");
-      */
+
     } catch (error) {
       console.error('Error al enviar datos:', error);
     }
@@ -165,50 +151,31 @@ const New = () => {
 
                 <div className="formInput">
                   <label htmlFor="apellido">Apellido</label>
-                  <input type="text" id="apellido" name="apellido" value={formData.apellido.toString()}  onChange={handleInput}/>
+                  <input type="text" id="apellido" name="apellido" value={formData.apellido}  onChange={handleInput}/>
                 </div>
-                {/*
                 <div className="formInput">
                   <label htmlFor="tipoIdentificacion">Tipo Documento</label>
-                  <select id="tipoIdentificacion" value={optionCC} onChange={handleOptionCC}>
-                    <option value="seleccione">Seleccione una opcion</option>
-                    <option value="CC">C.C</option>
-                    <option value="cedulaExtranjeria">C.E</option>
-                    <option value="targetaIdentidad">T.I</option>
-                    <option value="targetaExtranjeria">T.E</option>
-                    <option value="reg_civil">Registro civil</option>
-                    <option value="per_temporal">Permiso Temporal</option>
-                    <option value="otro">Otro</option>  
+                  <select id="tipoIdentificacion" name="tipoIdentificacion" value={formData.tipoIdentificacion} onChange={handleInput}>
+                    <option value="">Seleccione una opcion</option>
+                    <option value="CC">Cedula Ciudadanía</option>
+                    <option value="CE">Cedula Ciudadanía</option>
+                    <option value="TI">Targeta Identidad</option>  
                   </select>
-                </div>
-
-                  */}
-                <div className="formInput">
-                  <label htmlFor="tipoIdentificacion">Tipo Identificacion</label>
-                  <input type="text"  id="tipoIdentificacion" name="tipoIdentificacion" value={formData.tipoIdentificacion}  onChange={handleInput}/>
                 </div>
 
                 <div className="formInput">
                   <label htmlFor="identificacion">Identificacion</label>
                   <input type="text"  id="identificacion" name="identificacion" value={formData.identificacion}  onChange={handleInput}/>
                 </div>
-                {/*
                 <div className="formInput">
-                  <label htmlFor="selectOption">Genero</label>
-                  <select id="selectOption" value={option} onChange={handleOption}>
-                    <option value="seleccione">Seleccione una opcion</option>
+                  <label htmlFor="genero">Genero</label>
+                  <select id="genero" name="genero" value={formData.genero}  onChange={handleInput}>
+                    <option value="">Seleccione una opcion</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
                     <option value="Otro">Otro</option>  
                   </select>
                 </div>
-                  */}
-                <div className="formInput">
-                  <label htmlFor="genero">Genero</label>
-                  <input type="text"  id="genero" name="genero" value={formData.genero}  onChange={handleInput}/>
-                </div>
-
-
 
                 <div className="formInput">
                   <label htmlFor="fechaNacimiento">Fecha Nacimiento</label>
@@ -223,28 +190,30 @@ const New = () => {
                   <input type="text" id="telefono" name="telefono" value={formData.telefono}  onChange={handleInput}/>
                 </div>
                 <div className="formInput">
-                  <label htmlFor="departamentoId">Departamento</label>
-                  <input type="text" id="departamentoId" name="departamentoId" value={formData.departamentoId} onChange={handleInput}/>
+                  <label htmlFor="departamento">Departamento</label>
+                  <input type="text" id="departamento" name="departamento" value={formData.departamento} onChange={handleInput}/>
                 </div>
                 <div className="formInput">
-                  <label htmlFor="ciudadId">ciudad</label>
-                  <input type="text" id="ciudadId" name="ciudadId" value={formData.ciudadId}  onChange={handleInput}/>
+                  <label htmlFor="ciudad">ciudad</label>
+                  <input type="text" id="ciudad" name="ciudad" value={formData.ciudad}  onChange={handleInput}/>
                 </div>
+
+
                 <div className="formInput">
                   <label htmlFor="barrioId">Barrio</label>
-                  <input type="text" id="barrioId" name="barrioId" value={formData.barrioId} onChange={handleInput}/>
+                  <input type="text" id="barrioId" name="barrioId" value={formData} onChange={handleInput}/>
                 </div>
                 <div className="formInput">
                   <label htmlFor="corregimientoId">Corregimiento</label>
-                  <input type="text" id="corregimientoId" name="corregimientoId" value={formData.corregimientoId} onChange={handleInput}/>
+                  <input type="text" id="corregimientoId" name="corregimientoId" value={formData} onChange={handleInput}/>
                 </div>
                 <div className="formInput">
-                  <label htmlFor="veredald">Vereda</label>
-                  <input type="text" id="veredald" name="veredald" value={formData.veredald} onChange={handleInput}/>
+                  <label htmlFor="veredaId">Vereda</label>
+                  <input type="text" id="veredaId" name="veredaId" value={formData} onChange={handleInput}/>
                 </div>
                 <div className="formInput">
-                  <label htmlFor="comunald">Comuna</label>
-                  <input type="text" id="comunald" name="comunald" value={formData.comunald} onChange={handleInput}/>
+                  <label htmlFor="comunaId">Comuna</label>
+                  <input type="text" id="comunaId" name="comunaId" value={formData} onChange={handleInput}/>
                 </div>
                 
                 <div className="formDocument">

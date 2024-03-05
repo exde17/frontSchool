@@ -11,6 +11,7 @@ const Logout = () => {
     if (confirmLogout) {
       // Borra la cookie de token
       Cookies.remove('token');
+      localStorage.removeItem('token');
       // Redirige al usuario a la página de inicio de sesión
       navigate('/login');
     }
@@ -20,7 +21,7 @@ const Logout = () => {
     navigate('/home');
   }
 
-    return (
+  return (
     <div>
       <button onClick={handleLogout}>Cerrar Sesión</button>
       <button onClick={handleBack}>Volver</button>
