@@ -9,11 +9,12 @@ import Single from './pages/single/Single.jsx';
 import New from './pages/new/New.jsx';
 import Followup from "./pages/followup/Followup.jsx";
 import Logout from './components/logout/Logout.jsx';
+import EditUser from './pages/editUser/EditUser.jsx';
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   const isAuthenticated = localStorage.getItem('token');
 
   return (
@@ -29,13 +30,13 @@ function App() {
             <Route index element={<List/>}/>
             <Route path=":userId" element={<Single/>}/>
             <Route path="new" element={<New/>}/>
+            <Route path='edit'element={<EditUser/>}/>
           </Route>
           <Route path="academico"> 
             <Route index element={<Followup/>}/>
             <Route path=":seguimiento" element={<Followup/>}/>
             <Route path="new" element={<New/>}/>
           </Route>
-         
         </Routes>
       </Router>
     </>

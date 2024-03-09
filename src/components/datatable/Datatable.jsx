@@ -13,44 +13,20 @@ const columns = [
   { field: 'nombre', headerName: 'Nombre', width: 150, editable: false, },
   { field: 'identificacion', headerName: 'Identificacion', width: 150, editable: false, },
   { field: 'genero', headerName: 'Genero', width: 100, editable: true, },
-  /* 
-  { field: 'email', headerName: 'Email', sortable: false, width: 200,
-  renderCell: (params) =>{
-    return(
-      <>
-      <span>{params.row.lastName}</span>
-      <p>{params.row.age}</p>
-      </>
-      );
-    }
-    // valueGetter: (params) =>
-    //   `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-  */
+
 ];
 
-/*
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: 67 },
-  { id: 6, lastName: 'Melisandre', firstName: 'Gabriela', age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
-*/
+
 
 const Datatable = () => {
-  const [rows, setRows] = useState([]);
+  const [dataRows, setDataRows] = useState([]);
+  const [actualizar, setActuaizar] = useState();
   const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     //Realiza la llamada a la API para obtener los datos
-    const fetchData = async () =>{
+    const fetchData = async () =>{  
       try{
         // Recuperar el token de autenticación del localStorage
         const storedToken = localStorage.getItem('token');
@@ -59,20 +35,21 @@ const Datatable = () => {
         if (!storedToken) {
           throw new Error('Token de autenticación no encontrado en el localStorage');
         }
-
+        
         // Realizar la solicitud a la API incluyendo el token de autenticación en el encabezado
         const response = await axios.get('https://render-school.onrender.com/api/persona', {
           headers: {
             Authorization: `Bearer ${storedToken}`,
             },
         });
-
-        // Asigna un id único a cada fila
-        const rowsWithIds = response.data.map((row, index) => ({ ...row, id: index + 1 }));
-        setRows(rowsWithIds);
+         // retorna los datos del usuario
+        const rowsWithIds = response.data.map((row, ) => ({ ...row, }));
+        
+        setDataRows(rowsWithIds);
         setLoading(false);
       }catch(error){
         console.error('Error al obtener los datos', error);
+        throw error; // Re-lanzar el error para que el componente que llama pueda manejarlo
         setLoading(false);
       };
     }
@@ -87,11 +64,15 @@ const Datatable = () => {
     width: 200, 
     renderCell: ()=> (
         <div className="cellAction">
-          <Link to="/users/test" style={{textDecoration: "none"}}>
+          <Link to='/users/test/' style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
-          <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
+          <Link>
+            <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
+          </Link>
+          <Link to='/users/edit/' style={{textDecoration: "none"}}>
+            <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
+          </Link>
         </div>
       ),
    },
@@ -110,13 +91,13 @@ const Datatable = () => {
             <div className="datatable-container">
               {loading ? (
                 <p>Cargando...</p>
-              ) : rows.length === 0 ? (
+              ) : dataRows.length === 0 ? (
                 <p>No hay datos</p>
               ) : (
                 <div style={{ height: 400, width: '100%' }}>
                   <DataGrid
                     className='datagrid'
-                    rows={rows}
+                    rows={dataRows}
                     columns={columns.concat(actionColumn)}
                     initialState={{
                       pagination: {
@@ -138,4 +119,4 @@ const Datatable = () => {
   );
 };
 
-export default Datatable
+export default Datatable;

@@ -4,7 +4,8 @@
 }
 
 .login{
-    background: linear-gradient(45deg, #570168, #000052);
+    background-color: #dad4d4;
+    /*background: linear-gradient(45deg, #570168, #000052);*/
     height: 100vh;
     display: flex;
     align-items: center;
