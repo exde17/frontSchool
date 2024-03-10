@@ -88,8 +88,6 @@ const New = () => {
         //_________________________
         // Aquí puedes enviar los datos que deseas al endpoint
         formData: formData,
-        option: option,
-        optionCC: optionCC,
         
         // Puedes agregar más datos según sea necesario
       });

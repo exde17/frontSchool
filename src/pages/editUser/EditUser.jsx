@@ -1,55 +1,48 @@
-
-/*const EditUser = () => {
-  return (
-    <div className='edit'>
-        <Sidebar/>
-        <div className='containerEdit'>
-            <Navbar/>
-            <div className='topEdit'>
-                <h1>Editar Usuario</h1>
-            </div>
-              
-        </div>
-    </div>
-  )
-}
-
-export default EditUser
-*/
-
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import { actualizar } from './../../components/datatable/Datatable.jsx'
+import axios from "axios";
 import img from "../../img/no-image-found.png"
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import "./edituser.css";
 
-const EditUser = (props) => {
-  const { userId } = useParams();
-  const [user, setUser] = useState(null);
+const EditUser = () => {
+  const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState('');
-
-  useEffect(() => {
-    /*
-    // Verifica si el token está en el localStorage al cargar el componente
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      setToken(storedToken);
-    }
-    */
+ 
+  useEffect(() => { 
+    
     const fetchData = async () => {
       try {
+        // Verifica si el token está en el localStorage al cargar el componente
         const storedToken = localStorage.getItem('token');
-        const userId = props.match.params.userId; // Obtener el ID del usuario de la URL
-        const response = await axios.get(`https://render-school.onrender.com/api/persona/${userId}`, {
+        if (storedToken) {
+          setToken(storedToken);
+        }
+        const response = await axios.get(`https://render-school.onrender.com/api/persona/${id}`, {
           headers: {
             Authorization: `Bearer ${storedToken}`,
           },
         });
+        if (response && response.data){
+            const userData = response.data;
+            setFormData({
+              nombre:             userData.nombre,
+              apellido:           userData.apellido,
+              fechaNacimiento:    userData.fechaNacimiento,
+              tipoIdentificacion: userData.tipoIdentificacion,
+              identificacion:     userData.identificacion,
+              genero:             userData.genero,
+              email:              userData.email,
+              telefono:           userData.telefono,
+              departamento:       userData.departamento,
+              ciudad:             userData.ciudad,
+          });
+        } else {
+          throw new Error('La solicitud HTTP no fue exitosa');
+        }
         // Usar los datos de response.data para prellenar el formulario de edición
       } catch (error) {
         console.error('Error al obtener los datos del usuario', error);
@@ -57,7 +50,7 @@ const EditUser = (props) => {
     };
   
     fetchData();
-  }, []);
+  }, [id]);
 
   // Se crea el estado del documento
   const [document, setDocument] = useState(null);
@@ -102,11 +95,9 @@ const EditUser = (props) => {
     event.preventDefault();
     
     try {
-      //________________________
       if (!token) {
         throw new Error('Token de autenticación no encontrado en el localStorage');
       }
-      //________________________
 
       const formDataToSend = new FormData();
       // Agregar los archivos al formDataToSend
@@ -120,7 +111,7 @@ const EditUser = (props) => {
       });
 
       // Enviar formDataToSend al endpoint
-      const API_URL = `https://render-school.onrender.com/api/persona/${userId}`;
+      const API_URL = `https://render-school.onrender.com/api/persona/${id}`;
       const response = await axios.patch(API_URL, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
@@ -129,8 +120,6 @@ const EditUser = (props) => {
         //_________________________
         // Aquí puedes enviar los datos que deseas al endpoint
         formData: formData,
-        option: option,
-        optionCC: optionCC,
         
         // Puedes agregar más datos según sea necesario
       });
@@ -139,7 +128,6 @@ const EditUser = (props) => {
   
       // Restablecer los campos del formulario después de enviarlos
       setFormData({
-
         nombre: "",
         apellido: "",
         fechaNacimiento: "",
@@ -156,7 +144,6 @@ const EditUser = (props) => {
         veredaId: "",
         comunaId: "",
       */
-        
       });
       setLoading(false);
     } catch (error) {
@@ -165,10 +152,8 @@ const EditUser = (props) => {
     }
 
   };
-     
- 
-
   
+
   return (
     <div className="edit">
       <Sidebar/>

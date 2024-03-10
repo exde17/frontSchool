@@ -28,9 +28,11 @@ function App() {
           <Route path="/home" element={<Home />}  />
           <Route path="users"> 
             <Route index element={<List/>}/>
-            <Route path=":userId" element={<Single/>}/>
+            <Route path="test/:id" element={<Single/>}/>
             <Route path="new" element={<New/>}/>
-            <Route path='edit'element={<EditUser/>}/>
+            <Route path="edit/:id" element={<EditUser/>} />
+            {/* <Route path="view/:id" element={<Single/>}/> */}
+            {/* <Route path="delete/:id" element={<DeleteUser/>}/>  */}
           </Route>
           <Route path="academico"> 
             <Route index element={<Followup/>}/>
