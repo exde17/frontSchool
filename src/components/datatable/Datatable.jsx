@@ -63,7 +63,7 @@ const Datatable = () => {
           <Link to={`/users/test/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <Link>
+          <Link to={`/users/delete/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
           </Link>
           <Link to={`/users/edit/${params.row.id}`} style={{textDecoration: "none"}}>

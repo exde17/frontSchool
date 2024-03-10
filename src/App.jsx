@@ -10,7 +10,7 @@ import New from './pages/new/New.jsx';
 import Followup from "./pages/followup/Followup.jsx";
 import Logout from './components/logout/Logout.jsx';
 import EditUser from './pages/editUser/EditUser.jsx';
-
+import DeleteUser from './pages/deleteUser/DeleteUser.jsx';
 
 
 function App() {
@@ -31,8 +31,7 @@ function App() {
             <Route path="test/:id" element={<Single/>}/>
             <Route path="new" element={<New/>}/>
             <Route path="edit/:id" element={<EditUser/>} />
-            {/* <Route path="view/:id" element={<Single/>}/> */}
-            {/* <Route path="delete/:id" element={<DeleteUser/>}/>  */}
+            <Route path="delete/:id" element={<DeleteUser/>}/> 
           </Route>
           <Route path="academico"> 
             <Route index element={<Followup/>}/>
