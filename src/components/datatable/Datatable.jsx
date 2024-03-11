@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import DeleteUser from '../../pages/deleteUser/DeleteUser';
 import './datatable.css';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
@@ -18,9 +17,12 @@ const columns = [
 
 ];
 
+
 const Datatable = () => {
   const [dataRows, setDataRows] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+
 
   useEffect(() => {
     //Realiza la llamada a la API para obtener los datos
@@ -53,9 +55,10 @@ const Datatable = () => {
     fetchData();
   }, []); // El segundo argumento [] asegura que esta llamada solo se realice una vez al montar el componente
 
-  
 
-  const actionColumn = [
+  
+  
+    const actionColumn = [
     {field:"action", 
     headerName:"Action", 
     width: 200, 

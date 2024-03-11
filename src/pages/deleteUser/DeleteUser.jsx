@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import "./deleteuser.css";
 
@@ -34,21 +34,27 @@ const DeleteUser = () => {
 
   return (
     <div className='delete'>
-        <div className='windows' >
-            <button className='primary' onClick={() => setShowModal(true)}> Eliminar datos  </button>
-            {/* Modal de confirmación */}
-            {showModal && (
-                <div className="modal">
-                    <div className="modal-content">
-                            <p>¿Seguro que quieres borrar los datos?</p>
-                        <div className="modal-button">
-                            <button className='secondary' onClick={deletedData}>Sí</button>
-                            <button className='secondary' onClick={() => setShowModal(false)} >Cancelar</button>
+            <div className='windows' >
+                <Link to="/users" style={{textDecoration: "none"}}>
+                    <button className='cerrarX'> X </button>
+                </Link>
+                <button className='primary' onClick={() => setShowModal(true)}> Eliminar datos </button>
+                {/* Modal de confirmación */}
+                {showModal && (
+                    <div className="modal">
+                        <div className="modal-content">
+                                <p>¿Seguro que quieres borrar los datos?</p>
+                            <div className="modal-button">
+                                <button className='secondary' onClick={deletedData}>Sí</button>
+                                <Link to="/users" style={{textDecoration: "none"}}>
+                                    <button className='secondary' onClick={() => setShowModal(false)} >Cancelar</button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        
     </div>
   )
 }
