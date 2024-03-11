@@ -32,18 +32,19 @@ const DeleteUser = () => {
     };
 
 
-
   return (
     <div className='delete'>
-        <div>
-            <button onClick={() => setShowModal(true)}> Eliminar </button>
+        <div className='windows' >
+            <button className='primary' onClick={() => setShowModal(true)}> Eliminar datos  </button>
             {/* Modal de confirmación */}
             {showModal && (
                 <div className="modal">
                     <div className="modal-content">
-                        <p>¿Seguro que quieres borrar los datos?</p>
-                        <button onClick={deletedData}>Sí</button>
-                        <button onClick={() => setShowModal(false)} >Cancelar</button>
+                            <p>¿Seguro que quieres borrar los datos?</p>
+                        <div className="modal-button">
+                            <button className='secondary' onClick={deletedData}>Sí</button>
+                            <button className='secondary' onClick={() => setShowModal(false)} >Cancelar</button>
+                        </div>
                     </div>
                 </div>
             )}

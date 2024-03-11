@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './datatable.css'
+import DeleteUser from '../../pages/deleteUser/DeleteUser';
+import './datatable.css';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -52,7 +53,7 @@ const Datatable = () => {
     fetchData();
   }, []); // El segundo argumento [] asegura que esta llamada solo se realice una vez al montar el componente
 
-
+  
 
   const actionColumn = [
     {field:"action", 
