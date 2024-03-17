@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './datatable.css';
+import './datatablestudent.css';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -38,7 +38,7 @@ const Datatable = () => {
         }
         
         // Realizar la solicitud a la API incluyendo el token de autenticación en el encabezado
-        const response = await axios.get('https://render-school.onrender.com/api/persona', {
+        const response = await axios.get('https://render-school.onrender.com/api/estudiante', {
           headers: {
             Authorization: `Bearer ${storedToken}`,
             },
@@ -59,20 +59,19 @@ const Datatable = () => {
 
 
   
-  
     const actionColumn = [
     {field:"action", 
     headerName:"Action", 
     width: 200, 
     renderCell: (params)=> (
         <div className="cellAction">
-          <Link to={`/users/test/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/student/view/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <Link to={`/users/delete/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/student/delete/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
           </Link>
-          <Link to={`/users/edit/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/student/edit/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
           </Link>
         </div>
@@ -81,8 +80,8 @@ const Datatable = () => {
   ];
 
   return (
-      <div className='datatable'>
-        <div className="usersNew">
+      <div className='datatableStudent'>
+        <div className="usersStudent">
           <div className="buttons">
             <button>Agregar Persona</button>
             <Link to="/student">
@@ -93,8 +92,8 @@ const Datatable = () => {
         </div>
         <div className="table">
           <div className="datatableTitle">
-            Nuevo Usuario
-            <Link to="/users/new" className='linkDatatable'>
+            Nuevo Estudiante
+            <Link to="/student/new" className='linkDatatable'>
               Agregar
             </Link>
           </div>
@@ -103,7 +102,7 @@ const Datatable = () => {
               {loading ? (
                 <p>Cargando...</p>
               ) : dataRows.length === 0 ? (
-                <p>No hay datos</p>
+                <p>No hay datos de Estudiante</p>
               ) : (
                 <div style={{ height: 400, width: '100%' }}>
                   <DataGrid

@@ -28,7 +28,7 @@ const New = () => {
   
   //Estado de la imagen de perfil
   const [ file, setFile ] = useState("");
-  
+
   
   const [ formData, setFormData] = useState({
     

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import "./deleteuser.css";
+import "./deletestudent.css";
 
-const DeleteUser = () => {
+const DeleteStudent = () => {
     const { id } = useParams();
     const [showModal, setShowModal] = useState(false);
 
@@ -59,4 +59,4 @@ const DeleteUser = () => {
   )
 }
 
-export default DeleteUser
+export default DeleteStudent

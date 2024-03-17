@@ -1,8 +1,8 @@
-.datatable{
+.datatableStudent{
     height: 400px;
     padding: 40px;
 
-    .usersNew{
+    .usersStudent{
         margin: 10px;
         padding: 20px;
         box-shadow: 4px 6px 11px -4px rgba(0,0,0,0.75);

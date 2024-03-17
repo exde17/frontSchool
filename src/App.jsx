@@ -11,6 +11,10 @@ import Followup from "./pages/followup/Followup.jsx";
 import Logout from './components/logout/Logout.jsx';
 import EditUser from './pages/editUser/EditUser.jsx';
 import DeleteUser from './pages/deleteUser/DeleteUser.jsx';
+import ViewStudent from './components/createstudent/ViewStudent.jsx';
+import CreateStudent from './components/createstudent/CreateStudent.jsx'
+import EditStudent from './components/createstudent/EditStudent.jsx';
+import ListStudent from './pages/liststudent/ListStudent.jsx';
 
 
 function App() {
@@ -31,6 +35,13 @@ function App() {
             <Route path="test/:id" element={<Single/>}/>
             <Route path="new" element={<New/>}/>
             <Route path="edit/:id" element={<EditUser/>} />
+            <Route path="delete/:id" element={<DeleteUser/>}/> 
+          </Route>
+          <Route path="student"> 
+            <Route index element={<ListStudent/>}/>
+            <Route path="view/:id" element={<ViewStudent/>}/>
+            <Route path="new" element={<CreateStudent/>}/>
+            <Route path="edit/:id" element={<EditStudent/>} />
             <Route path="delete/:id" element={<DeleteUser/>}/> 
           </Route>
           <Route path="academico"> 

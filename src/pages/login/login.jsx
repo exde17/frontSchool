@@ -27,6 +27,7 @@ const Login = () => {
               console.log(response);            
               
         } catch (error) {
+            alert('Error en la solicitud', error);
             console.error('Error en la solicitud:', error);
             setAlertMessage('Error en las credenciales. Vefifica e intentalo nuevamente');
      
