@@ -11,9 +11,8 @@ import EditIcon from '@mui/icons-material/Edit';
 const columns = [
   { field: 'no', headerName: 'No', width: 90 },
   { field: 'id', headerName: 'ID', width: 180},
-  { field: 'nombre', headerName: 'Nombre', width: 150, editable: false, },
-  { field: 'identificacion', headerName: 'Identificacion', width: 150, editable: false, },
-  { field: 'genero', headerName: 'Genero', width: 150, editable: false, },
+  { field: 'grupo', headerName: 'Grupo', width: 200, editable: false, },
+  { field: 'acudiente', headerName: 'Acudiente', width: 200, editable: false, },
 
 ];
 

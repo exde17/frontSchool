@@ -11,20 +11,22 @@ const CreateStudent = () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
 
-
   // Buscar el usuario en la base de datos
+  useEffect(() => {
+    // Verifica si el token está en el localStorage al cargar el componente
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
 
-  const handleChange = async (event) => {
-    const {value} = event.target;
+  const handleSearch = async (value) => {
     setSearch(value);
     
-    if(value.trim() !== '') {
-      try{
+    if (value.trim() !== '') {
+      try {
         setLoading(true);
-        // Recuperar el token de autenticación del localStorage
         const storedToken = localStorage.getItem('token');
-        
-        // Verificar si el token está presente
         if (!storedToken) {
           throw new Error('Token de autenticación no encontrado en el localStorage');
         }
@@ -34,33 +36,35 @@ const CreateStudent = () => {
           },
         });
         setSearchResults(response.data);
-
+        console.log(value);
       } catch (error) {
         console.error('Error buscando los datos', error);
       } finally {
         setLoading(false);
       }
     } else {
-      setSearchResults([]); // Limpiar los resultados se la busqueda esta vacia 
+      setSearchResults([]);
     }
   };
-  // __________________________________________
 
 
-  useEffect(() => {
-    // Verifica si el token está en el localStorage al cargar el componente
-    const storedToken = localStorage.getItem('token');
-    if (storedToken) {
-      setToken(storedToken);
+  const handleSelect = (event) => {
+    const selectUserId = parseInt(event.target.value);
+    const selectedUser = searchResults.find((user) => user.id === selectUserId);
+    if (selectedUser) {
+      setFormData({
+        ...formData,
+         // Aquí puedes agregar más campos según sea necesario
+        persona: selectedUser.id    // Agrega el ID seleccionado como "persona"
+      });
     }
-  }, []);
-
+  };
 
   const [ formData, setFormData] = useState({
-
-    nombre: "",
+ 
     grupo: "",
     acudiente: "",
+    persona: "" // Agrega el campo "persona" al objeto formData
   });
   
   const handleInput = (event) =>{
@@ -68,7 +72,7 @@ const CreateStudent = () => {
     setFormData({...formData, [name]: value});
   };
   
-  const handleSubmit = async (event,) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     
     try {
@@ -76,36 +80,32 @@ const CreateStudent = () => {
       if (!token) {
         throw new Error('Token de autenticación no encontrado en el localStorage');
       }
-      //________________________
 
       const formDataToSend = new FormData();
-      // Agregar los archivos al formDataToSend      
-
-      // Agregar los demás datos del formulario al formDataToSend
       Object.keys(formData).forEach((key) => {
         formDataToSend.append(key, formData[key]);
       });
-
+      //________________________
       // Enviar formDataToSend al endpoint
       const API_URL = `https://render-school.onrender.com/api/estudiante`;
-      const response = await axios.post(API_URL, {
+      const response = await axios.post(API_URL, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
           'Content-Type': 'application/json' // Especifica el tipo de contenido como JSON
         },
         //_________________________
         // Aquí puedes enviar los datos que deseas al endpoint
-        formData: formData,
-        
+       
         // Puedes agregar más datos según sea necesario
       });
       console.log('Respuesta del servidor:', response.data);
   
       // Restablecer los campos del formulario después de enviarlos
       setFormData({
-        nombre: "",
+        
         grupo: "",
         acudiente: "",
+        persona: "" // Agrega el campo "persona" al objeto formData
       });
 
     } catch (error) {
@@ -123,22 +123,22 @@ const CreateStudent = () => {
           <h1>Nuevo Estudiante </h1>
         </div>
         <div className="bottomCreate">
-          
             <div className="rightCreate">
               <form onSubmit={handleSubmit}>
                 <div className="formInput">
-                  <label htmlFor="nombre">Nombre</label>
-                  <input type="text" id="nombre" name="nombre" value={formData.nombre} onChange={handleInput} />
+                  <label htmlFor="persona">Nombre</label>
+                  <input type="text" id="persona" name="persona" value={formData.persona} onChange={handleInput} />
+                 {/* onChange={ (e) => handleSearch(e.target.value)} */}
+                  <select onChange={handleSelect}>
+                    <option value="">Seleccionar Usuarios</option>
+                    {searchResults.map((user) =>(
+                      <option key={user.id} value={user.id}>{user.id}</option>
+                    ))}
+                      
+                  </select>
                   {loading && <p> Cargando resultados...</p>}
-                  {searchResults.length > 0 && (
-                    <ul>
-                      {searchResults.map((user) => (
-                        <li key={user.id}>{user.name}</li>
-                        ))}
-                    </ul>  
-                  )}
                 </div>
-                <div className="formInput"> 
+                <div className="formInput">   
                   <label htmlFor="grupo">Grupo</label>
                   <input type="text" id="grupo" name="grupo" value={formData.grupo}  onChange={handleInput}/>
                 </div>

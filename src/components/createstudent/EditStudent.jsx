@@ -27,7 +27,7 @@ const EditStudent = () => {
         if (response && response.data){
             const userData = response.data;
             setFormData({
-              nombre:             userData.nombre,
+              nombre:             userData.id,
               grupo:              userData.grupo,
               acudiente:          userData.acudiente,
           });
