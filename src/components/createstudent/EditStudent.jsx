@@ -45,11 +45,6 @@ const EditStudent = () => {
 
   // Se crea el estado del documento
   const [document, setDocument] = useState(null);
-  
-  const handleDocument = (event) =>{
-    const selectedDocument = event.target.files[0];
-    setDocument(selectedDocument);
-  };
 
   
   const [ formData, setFormData] = useState({
@@ -122,7 +117,7 @@ const EditStudent = () => {
       <div className="containerEdit">
         <Navbar/>
         <div className="topEdit">
-          <h1> Editar Usuario </h1>
+          <h1> Editar Estudiante </h1>
         </div>
         <div className="bottomEdit">
          

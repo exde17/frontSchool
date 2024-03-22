@@ -29,8 +29,8 @@ const ViewStudent = () => {
         if (response && response.data){
           const userData = response.data;
           setFormData({
-            nombre:    userData.nombre,
-            grupo:     userData.grupo,     
+            nombre:    userData.persona,
+            grupo:     userData.grupo,
             acudiente: userData.acudiente,
           });
         } else {
@@ -69,15 +69,15 @@ const ViewStudent = () => {
                 <h1 className="nombre" id="nombre">{formData.nombre}</h1> 
                 <div className="detailItem">
                   <span className="itemKey">Nombres</span>
-                  <span className="itemValue" id="nombre" >{formData.nombre}</span>  
+                  <span className="itemValue" id="persona" >{formData.persona}</span>  
                 </div> 
                 <div className="detailItem">
                   <span className="itemKey">Grupo</span>
-                  <span className="itemValue" id="apellido" >{formData.grupo}</span>  
+                  <span className="itemValue" id="grupo" >{formData.grupo}</span>  
                 </div> 
                 <div className="detailItem">
                   <span className="itemKey">Acudiente</span>
-                  <span className="itemValue" id="tipoIdentificacion" >{formData.acudiente}</span>  
+                  <span className="itemValue" id="acudiente" >{formData.acudiente}</span>  
                 </div> 
                 
               </div>

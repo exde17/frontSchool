@@ -10,14 +10,14 @@ import EditIcon from '@mui/icons-material/Edit';
 
 const columns = [
   { field: 'no', headerName: 'No', width: 90 },
-  { field: 'id', headerName: 'ID', width: 180},
+  { field: 'persona', headerName: 'nombre', width: 250},
   { field: 'grupo', headerName: 'Grupo', width: 200, editable: false, },
   { field: 'acudiente', headerName: 'Acudiente', width: 200, editable: false, },
 
 ];
 
 
-const Datatable = () => {
+const DatatableStudent = () => {
   const [dataRows, setDataRows] = useState([]);
   const [loading, setLoading] = useState(true);
   
@@ -86,7 +86,9 @@ const Datatable = () => {
             <Link to="/student">
               <button>Agregar estudiante</button>
             </Link>
-            <button>Agregar Docente</button>    
+            <Link to="/teacher">
+              <button>Agregar Docente</button>    
+            </Link>
           </div>
         </div>
         <div className="table">
@@ -128,4 +130,4 @@ const Datatable = () => {
   );
 };
 
-export default Datatable;
+export default DatatableStudent;

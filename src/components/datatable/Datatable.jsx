@@ -88,7 +88,9 @@ const Datatable = () => {
             <Link to="/student">
               <button>Agregar estudiante</button>
             </Link>
-            <button>Agregar Docente</button>    
+            <Link to="/teacher">
+              <button>Agregar Docente</button>    
+            </Link>
           </div>
         </div>
         <div className="table">
