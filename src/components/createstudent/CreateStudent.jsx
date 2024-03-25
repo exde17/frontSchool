@@ -50,6 +50,8 @@ const CreateStudent = () => {
     }
   };
 
+
+
   const handleSelect = (event) => {
     const selectedUserId = event.target.value;
     setSelectedUserId(selectedUserId);
@@ -57,7 +59,6 @@ const CreateStudent = () => {
     if (selectedUser) {
       setFormData({
         ...formData,
-       
         persona: selectedUserId
       });
     }
@@ -89,6 +90,7 @@ const CreateStudent = () => {
         },
       });
       console.log('Respuesta del servidor:', response.data);
+      
 
       setFormData({
         grupo: "",
@@ -118,7 +120,7 @@ const CreateStudent = () => {
                 <select onChange={handleSelect}>
                   <option value="">Seleccionar Usuarios</option>
                   {searchResults.map((user) => (
-                    <option key={user.id} value={user.id}>{user.nombre}</option>
+                    <option key={user.id} value={user.id}>{user.nombre} </option>
                   ))}
                 </select>
                 {loading && <p> Cargando resultados...</p>}

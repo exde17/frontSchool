@@ -28,8 +28,8 @@ const EditDocente = () => {
           if (response && response.data){
               const userData = response.data;
               setFormData({
-                persona:                userData.id,
-                categoriaFuncionario:   userData.categoriaFuncionario,
+                nombre:  userData.id,
+                categoriaFuncionario: userData.categoriaFuncionario,
             });
           } else {
             throw new Error('La solicitud HTTP no fue exitosa');
@@ -45,7 +45,7 @@ const EditDocente = () => {
   
     
     const [ formData, setFormData] = useState({
-      persona: "",
+      nombre: "",
       categoriaFuncionario: "",
   
     });
@@ -90,7 +90,7 @@ const EditDocente = () => {
     
         // Restablecer los campos del formulario después de enviarlos
         setFormData({
-          persona: "",
+          nombre: "",
           categoriaFuncionario: "",
         });
         setLoading(false);
@@ -114,17 +114,15 @@ const EditDocente = () => {
            
               <div className="rightEdit">
                 <form onSubmit={handleSubmit}>
-                  <div className="formInput">
-                    <label htmlFor="persona">Nombre</label>
-                    <input type="text" id="persona" name="persona" value={formData.persona} onChange={handleInput}/>
-                  </div>
   
                   <div className="formInput">
-                    <label htmlFor="categoriaFuncionario">Categoria</label>
+                    <label htmlFor="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" value={formData.nombre}  onChange={handleInput}/>
+                  </div>
+                  <div className="formInput">
+                    <label htmlFor="categoriaFuncionario">Categoria Funcionario</label>
                     <input type="text" id="categoriaFuncionario" name="categoriaFuncionario" value={formData.categoriaFuncionario}  onChange={handleInput}/>
                   </div>
-  
-                  
   
                   <div className="boton">
                     <button type='submit'>Guardar</button>

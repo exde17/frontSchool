@@ -10,9 +10,9 @@ import EditIcon from '@mui/icons-material/Edit';
 
 const columns = [
   { field: 'no', headerName: 'No', width: 90 },
-  { field: 'id', headerName: 'ID', width: 180},
-  { field: 'persona', headerName: 'Persona', width: 180},
-  { field: 'categoriaFuncionario', headerName: 'Categoria', width: 200, editable: false, },
+  { field: 'id', headerName: 'ID', width: 180 , hide: true},
+  { field: 'persona', headerName: 'Nombre', width: 250},
+  { field: 'identificacion', headerName: 'Identificación', width: 200 },
 
 ];
 

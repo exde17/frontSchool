@@ -27,7 +27,7 @@ const EditStudent = () => {
         if (response && response.data){
             const userData = response.data;
             setFormData({
-              nombre:             userData.id,
+              nombre:             userData.persona,
               grupo:              userData.grupo,
               acudiente:          userData.acudiente,
           });
@@ -81,7 +81,7 @@ const EditStudent = () => {
       });
 
       // Enviar formDataToSend al endpoint
-      const API_URL = `https://render-school.onrender.com/api/persona/${id}`;
+      const API_URL = `https://render-school.onrender.com/api/estudiante/${id}`;
       const response = await axios.patch(API_URL, formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado

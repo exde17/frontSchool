@@ -29,8 +29,9 @@ const ViewDocente = () => {
         if (response && response.data){
           const userData = response.data;
           setFormData({
-            persona: userData.id,
-            categoriaFuncionario:  userData.categoriaFuncionario,     
+            id: userData.id,
+            persona: userData.persona,
+            identificacion:  userData.identificacion,     
           });
         } else {
           throw new Error('La solicitud HTTP no fue exitosa');
@@ -47,7 +48,7 @@ const ViewDocente = () => {
 
   const [ formData, setFormData] = useState({
     persona: "",
-    categoriaFuncionario: "",
+    identificacion: "",
 
   });
 
@@ -66,11 +67,15 @@ const ViewDocente = () => {
                 <h1 className="nombre" id="nombre">{formData.nombre}</h1> 
                 <div className="detailItem">
                   <span className="itemKey">ID</span>
+                  <span className="itemValue" id="id" >{formData.id}</span>  
+                </div> 
+                <div className="detailItem">
+                  <span className="itemKey">Nombre</span>
                   <span className="itemValue" id="persona" >{formData.persona}</span>  
                 </div> 
                 <div className="detailItem">
-                  <span className="itemKey">Categoria</span>
-                  <span className="itemValue" id="categoriaFuncionario" >{formData.categoriaFuncionario}</span>  
+                  <span className="itemKey">Identificacion</span>
+                  <span className="itemValue" id="identificacion" >{formData.identificacion}</span>  
                 </div>
                 
               </div>

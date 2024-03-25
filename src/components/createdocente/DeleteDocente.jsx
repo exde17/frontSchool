@@ -18,7 +18,7 @@ const DeleteDocente = () => {
             }
 
             // Realizar la solicitud DELETE a la API incluyendo el token de autenticación en el encabezado
-            const response = await axios.delete(`https://render-school.onrender.com/api/persona/${id}`, {
+            const response = await axios.delete(`https://render-school.onrender.com/api/docente/${id}`, {
                 headers: {
                 Authorization: `Bearer ${storedToken}`,
                 },
@@ -35,7 +35,7 @@ const DeleteDocente = () => {
   return (
     <div className='delete'>
             <div className='windows' >
-                <Link to="/users" style={{textDecoration: "none"}}>
+                <Link to="/teacher" style={{textDecoration: "none"}}>
                     <button className='cerrarX'> X </button>
                 </Link>
                 <button className='primary' onClick={() => setShowModal(true)}> Eliminar datos </button>
