@@ -12,7 +12,7 @@ import CreateAcudiente from '../createacudiente/CreateAcudiente';
 const columns = [
   { field: 'no', headerName: 'No', width: 90 },
   { field: 'id', headerName: 'ID', width: 180 , hide: true},
-  { field: 'persona', headerName: 'Nombre', width: 250},
+  { field: 'nombre', headerName: 'Nombre', width: 250},
   { field: 'identificacion', headerName: 'Identificación', width: 200 },
 
 ];

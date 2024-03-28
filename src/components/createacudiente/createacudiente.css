@@ -38,7 +38,7 @@
   .cerrar{
     padding: 10px 40px;
     border-radius: 8px;
-    margin-top: 40px;
+    margin-right: 60px;
     background-color: rgba(255, 0, 0, 0.752);
     border: none;
     color: white;
@@ -47,8 +47,8 @@
   }
 
   .crear{
-    margin-left: 80px;
-    padding: 10px 40px;
+    display: column;
+    padding: 10px 45px;
     border-radius: 8px;
     margin-top: 40px;
     background-color: rgb(19, 160, 101);
