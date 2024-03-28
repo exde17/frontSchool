@@ -111,7 +111,7 @@ const ViewStudent = () => {
         </div>
         <div className="bottom">
           <h1 className="calificaciones">Calificaciones</h1>
-          <DatatableStudent/>
+         
         </div>
       </div>
     </div>

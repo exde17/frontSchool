@@ -1,26 +1,35 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './datatablestudent.css';
+import './datatableacudiente.css';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import CreateAcudiente from '../createacudiente/CreateAcudiente';
 
 
 const columns = [
   { field: 'no', headerName: 'No', width: 90 },
-  { field: 'persona', headerName: 'nombre', width: 250},
-  { field: 'grupo', headerName: 'Grupo', width: 200, editable: false, },
-  { field: 'acudiente', headerName: 'Acudiente', width: 200, editable: false, },
+  { field: 'id', headerName: 'ID', width: 180 , hide: true},
+  { field: 'persona', headerName: 'Nombre', width: 250},
+  { field: 'identificacion', headerName: 'Identificación', width: 200 },
 
 ];
 
 
-const DatatableStudent = () => {
+const DatatableAcudiente = () => {
   const [dataRows, setDataRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
 
   useEffect(() => {
@@ -37,7 +46,7 @@ const DatatableStudent = () => {
         }
         
         // Realizar la solicitud a la API incluyendo el token de autenticación en el encabezado
-        const response = await axios.get('https://render-school.onrender.com/api/estudiante', {
+        const response = await axios.get('https://render-school.onrender.com/api/acudiente', {
           headers: {
             Authorization: `Bearer ${storedToken}`,
             },
@@ -64,13 +73,13 @@ const DatatableStudent = () => {
     width: 200, 
     renderCell: (params)=> (
         <div className="cellAction">
-          <Link to={`/student/view/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/teacher/view/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <Link to={`/student/delete/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/teacher/delete/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
           </Link>
-          <Link to={`/student/edit/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/teacher/edit/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
           </Link>
         </div>
@@ -79,8 +88,8 @@ const DatatableStudent = () => {
   ];
 
   return (
-      <div className='datatableStudent'>
-        <div className="usersStudent">
+      <div className='datatableAcudiente'>
+        <div className="usersAcudiente">
           <div className="buttons">
             <Link to="/users">
               <button>Agregar Persona</button>
@@ -89,7 +98,7 @@ const DatatableStudent = () => {
               <button>Agregar estudiante</button>
             </Link>
             <Link to="/teacher">
-              <button>Agregar Docente</button>    
+                <button>Agregar Docente</button>    
             </Link>
             <Link to="/attendant">
               <button>Agregar Acudiente</button>    
@@ -98,17 +107,16 @@ const DatatableStudent = () => {
         </div>
         <div className="table">
           <div className="datatableTitle">
-            Nuevo Estudiante
-            <Link to="/student/new" className='linkDatatable'>
-              Agregar
-            </Link>
+            Nuevo Acudiente
+            <button onClick={handleOpenModal} className='linkDatatable'> Agregar</button>
+            <CreateAcudiente open={isModalOpen} onClose={handleCloseModal} />
           </div>
 
             <div className="datatable-container">
               {loading ? (
                 <p>Cargando...</p>
               ) : dataRows.length === 0 ? (
-                <p>No hay datos de Estudiante</p>
+                <p>No hay datos de Docentes</p>
               ) : (
                 <div style={{ height: 400, width: '100%' }}>
                   <DataGrid
@@ -135,4 +143,4 @@ const DatatableStudent = () => {
   );
 };
 
-export default DatatableStudent;
+export default DatatableAcudiente;

@@ -95,7 +95,7 @@ const CreateStudent = () => {
       setFormData({
         grupo: "",
         acudiente: "",
-        persona: ""
+        persona: "",
       });
 
     } catch (error) {
@@ -125,7 +125,7 @@ const CreateStudent = () => {
                 </select>
                 {loading && <p> Cargando resultados...</p>}
               </div>
-              <div className="formInput">   
+              <div className="formInput">
                 <label htmlFor="grupo">Grupo</label>
                 <input type="text" id="grupo" name="grupo" value={formData.grupo}  onChange={handleInput}/>
               </div>

@@ -14,12 +14,14 @@ import DeleteUser from './pages/deleteUser/DeleteUser.jsx';
 import DeleteDocente from './components/createdocente/DeleteDocente.jsx';
 import ViewStudent from './components/createstudent/ViewStudent.jsx';
 import ViewDocente from './components/createdocente/ViewDocente.jsx';
+import CreateAcudiente from './components/createacudiente/CreateAcudiente.jsx';
 import CreateStudent from './components/createstudent/CreateStudent.jsx';
 import CreateDocente from './components/createdocente/CreateDocente.jsx';
 import EditStudent from './components/createstudent/EditStudent.jsx';
 import EditDocente from './components/createdocente/EditDocente.jsx';
 import ListStudent from './pages/liststudent/ListStudent.jsx';
 import ListDocente from './pages/listdocente/ListDocente.jsx';
+import ListAcudiente from './pages/listacudiente/ListAcudiente.jsx';
 
 
 function App() {
@@ -53,6 +55,13 @@ function App() {
             <Route index element={<ListDocente/>}/>
             <Route path="view/:id" element={<ViewDocente/>}/>
             <Route path="new" element={<CreateDocente/>}/>
+            <Route path="edit/:id" element={<EditDocente/>} />
+            <Route path="delete/:id" element={<DeleteDocente/>}/> 
+          </Route>
+          <Route path="attendant"> 
+            <Route index element={<ListAcudiente/>}/>
+            <Route path="view/:id" element={<ViewDocente/>}/>
+            <Route path="new" element={<CreateAcudiente/>}/>
             <Route path="edit/:id" element={<EditDocente/>} />
             <Route path="delete/:id" element={<DeleteDocente/>}/> 
           </Route>

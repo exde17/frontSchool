@@ -109,7 +109,7 @@ const ViewDocente = () => {
         </div>
         <div className="bottom">
           <h1 className="calificaciones">Calificaciones</h1>
-          <DatatableDocente/>
+          
         </div>
       </div>
     </div>

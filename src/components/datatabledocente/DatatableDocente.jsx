@@ -82,12 +82,17 @@ const DatatableDocente = () => {
       <div className='datatableDocente'>
         <div className="usersDocente">
           <div className="buttons">
-            <button>Agregar Persona</button>
+            <Link to="/users">
+              <button>Agregar Persona</button>
+            </Link>
             <Link to="/student">
               <button>Agregar estudiante</button>
             </Link>
             <Link to="/teacher">
                 <button>Agregar Docente</button>    
+            </Link>
+            <Link to="/attendant">
+              <button>Agregar Acudiente</button>    
             </Link>
           </div>
         </div>
