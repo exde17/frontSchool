@@ -22,6 +22,7 @@ import EditDocente from './components/createdocente/EditDocente.jsx';
 import ListStudent from './pages/liststudent/ListStudent.jsx';
 import ListDocente from './pages/listdocente/ListDocente.jsx';
 import ListAcudiente from './pages/listacudiente/ListAcudiente.jsx';
+import Company from './pages/company/Company.jsx';
 
 
 function App() {
@@ -69,6 +70,10 @@ function App() {
             <Route index element={<Followup/>}/>
             <Route path=":seguimiento" element={<Followup/>}/>
             <Route path="new" element={<New/>}/>
+          </Route>
+          <Route path="company"> 
+            <Route index element={<Company/>}/>
+            <Route path=":seguimiento" element={<Company/>}/>
           </Route>
         </Routes>
       </Router>

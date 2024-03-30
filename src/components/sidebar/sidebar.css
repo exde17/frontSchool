@@ -5,7 +5,7 @@
 }
 
 .sidebar{ 
-    width: 25rem;
+    width: 20rem;
     height: 150vh;
     border-right: 0.5px solid rgb(168, 166, 166);
     /*background-color:  rgb(37, 37, 39);*/
@@ -91,3 +91,31 @@ span{
         background-color: rgb(10, 10, 10);
     }
 }
+
+/* Controla los estilos del subMenu*/
+.menuItem {
+    position: relative; /* Asegúrate de que el contenedor del elemento del menú tenga posicionamiento relativo */
+  }
+  
+  .subMenu {
+    position: absolute; /* Configura el submenú para tener posicionamiento absoluto */
+    top: 100%; /* Ajusta la posición vertical para que el submenú aparezca debajo del elemento del menú */
+    left: 0; /* Ajusta la posición horizontal si es necesario */
+    background-color: white; /* Ajusta el color de fondo del submenú */
+    border: 1px solid #ccc; /* Agrega un borde al submenú si es necesario */
+    padding: 10px 70px; /* Agrega espacio interno al submenú si es necesario */
+    z-index: 1000; /* Asegúrate de que el submenú esté en la parte superior */
+    display: flex;
+    flex-direction: column; /* Asegúrate de que los elementos del submenú estén en una columna */
+  }  
+  
+  .subMenu div {
+    padding: 8px 16px; /* Añade relleno para mejorar la apariencia */
+    color: #554d4d;
+    font-weight: 600;
+  }
+  
+  .subMenu div:hover {
+    background-color: #f0f0f0; /* Cambia el color de fondo al pasar el mouse */
+  }
+  

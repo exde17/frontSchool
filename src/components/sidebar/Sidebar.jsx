@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./sidebar.css";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -6,20 +7,26 @@ import BookIcon from '@mui/icons-material/Book';
 import RuleFolderIcon from '@mui/icons-material/RuleFolder';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import { Business } from "@mui/icons-material";
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import Logout from "../logout/Logout";
+
 /*
 import { DarkModeContext } from "../../context/darkMode";
 import { useContext } from "react";
 */
 
 const Sidebar = () => {  
+    const [subMenuOpen, setSubMenuOpen] = useState(false); // estado del submenu
     //const { dispatch } = useContext(DarkModeContext);
-  
+    
+    const handleSubMenuClick = () => {
+        setSubMenuOpen(!subMenuOpen); // Cambia el estado al contrario del estado actual
+      };
+
     const handleLogout = ()=>{
         const confirmLogout = window.confirm("¿Estás seguro que deseas cerrar sesión?");
         if (confirmLogout) {
@@ -78,10 +85,22 @@ const Sidebar = () => {
                     <NotificationsIcon className="icon"/>
                     <span>Notificaciones</span>
                 </li>
-                <li>
-                    <PsychologyIcon className="icon"/>
-                    <span>Logs</span>
-                </li>
+                <div className="menuItem" onClick={handleSubMenuClick}>
+                    <li>
+                        <Business className="icon" />
+                        <span>Empresa</span>
+                        {subMenuOpen && (
+                            <div className="subMenu">
+                                {/* Contenido del submenú */}
+                                <Link to="/company" style={{ textDecoration: "none" }}>
+                                    <div>Crear</div>
+                                </Link>
+                                <div>Editar</div>
+                            </div>
+                        )}
+                    </li>
+                </div>
+
                 <li>
                     <SettingsIcon className="icon"/>
                     <span>Ajustes</span>

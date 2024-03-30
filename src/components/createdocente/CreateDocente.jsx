@@ -119,7 +119,8 @@ const CreateDocente = () => {
                 <input type="text" id="persona" name="persona" 
                   value={searchTerm} 
                   onChange={(e) => {handleSearch(e.target.value); filterResults();}} 
-                  placeholder="Buscar"/>
+                  placeholder="Buscar"
+                />
                 <button onClick={handleOpenModal}>Seleccionar</button>
                 <Modal open={modalOpen} onClose={handleCloseModal}>
                   <ul>
