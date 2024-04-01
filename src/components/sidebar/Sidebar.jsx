@@ -62,6 +62,7 @@ const Sidebar = () => {
                         <span>Nuevo Registro</span>
                     </li>
                 </Link>
+                {/*
                 <Link to="/academico" style={{textDecoration: "none"}}>
                     <li>
                         <SummarizeIcon className="icon"/>
@@ -79,12 +80,12 @@ const Sidebar = () => {
                 <li>
                     <ListAltIcon className="icon"/>
                     <span>Informes</span>
-                </li>
+                </li> */}
                 <p className="title">SERVICIO</p>
-                <li>
+                {/* <li>
                     <NotificationsIcon className="icon"/>
                     <span>Notificaciones</span>
-                </li>
+                </li> */}
                 <div className="menuItem" onClick={handleSubMenuClick}>
                     <li>
                         <Business className="icon" />
@@ -101,10 +102,10 @@ const Sidebar = () => {
                     </li>
                 </div>
 
-                <li>
+                {/* <li>
                     <SettingsIcon className="icon"/>
                     <span>Ajustes</span>
-                </li>
+                </li> */}
                 <p className="title">USER</p>
                 <Link to="/perfil" style={{textDecoration: "none"}}>
                     <li>
