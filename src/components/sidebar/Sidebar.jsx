@@ -13,6 +13,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import Logout from "../logout/Logout";
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 
 /*
 import { DarkModeContext } from "../../context/darkMode";
@@ -101,7 +102,21 @@ const Sidebar = () => {
                         )}
                     </li>
                 </div>
-
+                <Link to="/other" style={{textDecoration: "none"}}>
+                    <li>
+                        <AutoAwesomeMotionIcon className="icon" />
+                        <span>Otros</span>
+                        {subMenuOpen && (
+                            <div className="subMenu">
+                                {/* Contenido del submenú */}
+                                <Link to="/company" style={{ textDecoration: "none" }}>
+                                    <div>Crear</div>
+                                </Link>
+                                <div>Editar</div>
+                            </div>
+                        )}
+                    </li>
+                </Link>
                 {/* <li>
                     <SettingsIcon className="icon"/>
                     <span>Ajustes</span>
