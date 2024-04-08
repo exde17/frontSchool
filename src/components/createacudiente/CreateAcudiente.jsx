@@ -72,7 +72,7 @@ const CreateAcudiente = ({ open, onClose }) => {
   return (
     <div className={`modal-overlay ${open ? 'open' : ''}`}>
       <div className={`modal-content ${open ? 'open' : ''}`}>
-        <h2>Agregar Acudiente</h2>
+        <h3>Agregar Acudiente</h3>
         <Autocomplete
           options={options}
           loading={loading}

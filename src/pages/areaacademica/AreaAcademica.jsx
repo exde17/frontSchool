@@ -2,7 +2,7 @@ import React from 'react'
 import './areaacademica.css';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
-import Academica from '../../components/areaacademica/Academica';
+import DatatableAcademica from '../../components/datatableacademica/DatatableAcademica';
 
 const AreaAcademica = () => {
   return (
@@ -11,7 +11,7 @@ const AreaAcademica = () => {
         <div className='container'>
             <Navbar/>
             <div>
-                <Academica/>
+                <DatatableAcademica/>
             </div>
         </div>
     </div>

@@ -15,15 +15,23 @@ import { Link } from 'react-router-dom';
 import Logout from "../logout/Logout";
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 
+import { List, ListItem, ListItemText, Collapse } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+
 /*
 import { DarkModeContext } from "../../context/darkMode";
 import { useContext } from "react";
 */
 
 const Sidebar = () => {  
+    const [colapse, setColapse] = useState(false);
     const [subMenuOpen, setSubMenuOpen] = useState(false); // estado del submenu
     //const { dispatch } = useContext(DarkModeContext);
     
+    const handleClick = () => {
+        setColapse(!colapse);
+    };
+
     const handleSubMenuClick = () => {
         setSubMenuOpen(!subMenuOpen); // Cambia el estado al contrario del estado actual
       };
@@ -102,21 +110,31 @@ const Sidebar = () => {
                         )}
                     </li>
                 </div>
-                <Link to="/other" style={{textDecoration: "none"}}>
-                    <li>
-                        <AutoAwesomeMotionIcon className="icon" />
-                        <span>Otros</span>
-                        {subMenuOpen && (
-                            <div className="subMenu">
-                                {/* Contenido del submenú */}
-                                <Link to="/company" style={{ textDecoration: "none" }}>
-                                    <div>Crear</div>
+                
+                    
+                    <div className="collapse">
+                        {/* Item principal */}
+                        <ListItem button onClick={handleClick}>
+                            <AutoAwesomeMotionIcon className="icon" />
+                            <span>Otros</span>
+                            {colapse ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        {/* Sub-items colapsables */}
+                        <Collapse in={colapse} timeout="auto" unmountOnExit>
+                            <div className="Item">
+                                <Link to="/other" style={{textDecoration: "none"}}>
+                                    <ListItem button >
+                                        <span>Area Academica</span>
+                                    </ListItem>
                                 </Link>
-                                <div>Editar</div>
+                                <ListItem button>
+                                    <span>Asignatura</span>
+                                </ListItem>
                             </div>
-                        )}
-                    </li>
-                </Link>
+                            
+                        </Collapse>
+                    </div>
+         
                 {/* <li>
                     <SettingsIcon className="icon"/>
                     <span>Ajustes</span>

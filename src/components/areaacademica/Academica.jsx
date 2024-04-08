@@ -1,32 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Modal, Box, TextField, Button } from '@mui/material';
 import './academica.css';
 
 const Academica = () => {
+    const [open, setOpen] = useState(false);
+    const [nombre, setNombre] = useState('');
     const [token, setToken] = useState('');
-    const [formData, setFormData] = useState({ nombre: '' });
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
-            setToken(storedToken);
+          setToken(storedToken);
         }
     }, []);
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+        setNombre(event.target.value);
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async () => {
         try {
-            if (!token) {
+            const storedToken = localStorage.getItem('token');
+            if (!storedToken) {
                 throw new Error('Token de autenticación no encontrado en el localStorage');
             }
             const response = await axios.post(
                 'https://render-school.onrender.com/api/area',
-                formData,
+                { nombre },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -35,42 +39,41 @@ const Academica = () => {
                 }
             );
             console.log('Respuesta del servidor:', response.data);
-            // Limpiar el formulario después de enviar los datos
-            setFormData({ nombre: '' });
+            alert('Datos enviados', response.data);
+            // Limpiar el campo después de enviar los datos
+            setNombre('');
+            // Cerrar el modal después de enviar los datos
+            handleClose();
         } catch (error) {
             console.error('Error al enviar datos:', error);
-            alert('Error al enviar los datos',error);
+            alert('Error al enviar los datos', error);
         }
     };
 
     return (
-        <div className="academica">
-            <div className="container-acacemico">
-                <div className="title-academico">
-                    <h2>Area Academica</h2>
-                </div>
-                <div className="body-academico">
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-Input">
-                            <label htmlFor="academico">Area Academica</label>
-                            <input
-                                type="text"
-                                id="academico"
-                                name="nombre"
-                                placeholder="Nombre"
-                                value={formData.nombre}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="form-submit">
-                            <button type="submit">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div>
+            {/* Botón para abrir el modal */}
+            <button variant="contained" onClick={handleOpen} className='linkDatatable'>Agregar</button>
+            {/* Modal para crear área */}
+            <Modal open={open} onClose={handleClose} >
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                    <h3>Crear Área</h3>
+                    <TextField
+                        label="Nombre"
+                        variant="outlined"
+                        fullWidth
+                        value={nombre}
+                        onChange={handleInputChange}
+                        sx={{ mb: 2 }}
+                    />
+                    <Button variant="outlined" onClick={handleClose} sx={{ mr: 4 }}>Cerrar</Button>
+                    <Button variant="contained" onClick={handleSubmit} >Enviar</Button>
+                </Box>
+            </Modal>
         </div>
     );
 };
 
 export default Academica;
+
 
