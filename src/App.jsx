@@ -24,6 +24,8 @@ import ListDocente from './pages/listdocente/ListDocente.jsx';
 import ListAcudiente from './pages/listacudiente/ListAcudiente.jsx';
 import Company from './pages/company/Company.jsx';
 import { ListEducationLevels } from './pages/educationLevel/ListEducationLevels.jsx';
+import AreaAcademica from './pages/areaacademica/AreaAcademica.jsx';
+import Academica from './components/areaacademica/Academica.jsx';
 
 
 function App() {
@@ -77,6 +79,11 @@ function App() {
             <Route path=":seguimiento" element={<Company/>}/>
           </Route>
           <Route path="/educationLevel" element={<ListEducationLevels />}/>
+          <Route path="other"> 
+            <Route index element={<AreaAcademica/>}/>
+            <Route path=":seguimiento" element={<AreaAcademica/>}/>
+            <Route path="new" element={<Academica/>}/>
+          </Route>
         </Routes>
       </Router>
     </>
