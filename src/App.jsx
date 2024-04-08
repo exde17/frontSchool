@@ -23,6 +23,7 @@ import ListStudent from './pages/liststudent/ListStudent.jsx';
 import ListDocente from './pages/listdocente/ListDocente.jsx';
 import ListAcudiente from './pages/listacudiente/ListAcudiente.jsx';
 import Company from './pages/company/Company.jsx';
+import { ListEducationLevels } from './pages/educationLevel/ListEducationLevels.jsx';
 
 
 function App() {
@@ -75,6 +76,7 @@ function App() {
             <Route index element={<Company/>}/>
             <Route path=":seguimiento" element={<Company/>}/>
           </Route>
+          <Route path="/educationLevel" element={<ListEducationLevels />}/>
         </Routes>
       </Router>
     </>

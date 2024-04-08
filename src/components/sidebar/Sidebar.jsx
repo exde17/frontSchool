@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./sidebar.css";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import BookIcon from '@mui/icons-material/Book';
 import RuleFolderIcon from '@mui/icons-material/RuleFolder';
@@ -60,6 +61,13 @@ const Sidebar = () => {
                     <li>
                         <PersonAddIcon className="icon"/>
                         <span>Nuevo Registro</span>
+                    </li>
+                </Link>
+                <p className="title">NIVELES EDUCATIVOS</p>
+                <Link to="/educationLevel" style={{textDecoration: "none"}}>
+                    <li>
+                        <AutoStoriesIcon className="icon"/>
+                        <span>Gestionar</span>
                     </li>
                 </Link>
                 {/*
