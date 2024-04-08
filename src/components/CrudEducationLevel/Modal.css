@@ -96,7 +96,7 @@
 }
 .modal-background .modal-container .btn-registrar {
   font-family: 'Cascadia Code',Consolas, 'Courier New', monospace;
-  background: green;
+  background: rgb(1, 114, 1);
   color: white;
   width: 100px;
   height: 35px;
@@ -108,6 +108,6 @@
 }
 .modal-background .modal-container .btn-registrar:hover {
   background: white;
-  color: green;
-  border: 1px solid green;
+  color: rgb(1, 114, 1);
+  border: 1px solid rgb(1, 114, 1);
 }
