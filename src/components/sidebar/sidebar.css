@@ -92,6 +92,17 @@ span{
     }
 }
 
+.collapse{
+    margin: 0px;
+    padding: 0;
+    margin-left: -10px;
+}
+
+.Item{
+    border-left: 1px solid gray;
+    margin-left: 25px;
+}
+
 /* Controla los estilos del subMenu*/
 .menuItem {
     position: relative; /* Asegúrate de que el contenedor del elemento del menú tenga posicionamiento relativo */

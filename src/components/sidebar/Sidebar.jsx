@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./sidebar.css";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import BookIcon from '@mui/icons-material/Book';
 import RuleFolderIcon from '@mui/icons-material/RuleFolder';
@@ -13,6 +14,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import Logout from "../logout/Logout";
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
+
+import { List, ListItem, ListItemText, Collapse } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 /*
 import { DarkModeContext } from "../../context/darkMode";
@@ -20,9 +25,14 @@ import { useContext } from "react";
 */
 
 const Sidebar = () => {  
+    const [colapse, setColapse] = useState(false);
     const [subMenuOpen, setSubMenuOpen] = useState(false); // estado del submenu
     //const { dispatch } = useContext(DarkModeContext);
     
+    const handleClick = () => {
+        setColapse(!colapse);
+    };
+
     const handleSubMenuClick = () => {
         setSubMenuOpen(!subMenuOpen); // Cambia el estado al contrario del estado actual
       };
@@ -60,6 +70,13 @@ const Sidebar = () => {
                     <li>
                         <PersonAddIcon className="icon"/>
                         <span>Nuevo Registro</span>
+                    </li>
+                </Link>
+                <p className="title">NIVELES EDUCATIVOS</p>
+                <Link to="/educationLevel" style={{textDecoration: "none"}}>
+                    <li>
+                        <AutoStoriesIcon className="icon"/>
+                        <span>Gestionar</span>
                     </li>
                 </Link>
                 {/*
@@ -101,7 +118,31 @@ const Sidebar = () => {
                         )}
                     </li>
                 </div>
-
+                
+                    
+                    <div className="collapse">
+                        {/* Item principal */}
+                        <ListItem button onClick={handleClick}>
+                            <AutoAwesomeMotionIcon className="icon" />
+                            <span>Otros</span>
+                            {colapse ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        {/* Sub-items colapsables */}
+                        <Collapse in={colapse} timeout="auto" unmountOnExit>
+                            <div className="Item">
+                                <Link to="/other" style={{textDecoration: "none"}}>
+                                    <ListItem button >
+                                        <span>Area Academica</span>
+                                    </ListItem>
+                                </Link>
+                                <ListItem button>
+                                    <span>Asignatura</span>
+                                </ListItem>
+                            </div>
+                            
+                        </Collapse>
+                    </div>
+         
                 {/* <li>
                     <SettingsIcon className="icon"/>
                     <span>Ajustes</span>

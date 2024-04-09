@@ -1,26 +1,34 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './datatablestudent.css';
+import './datatableacademica.css';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import Academica from '../areaacademica/Academica';
 
 
 const columns = [
   { field: 'no', headerName: 'No', width: 90 },
-  { field: 'persona', headerName: 'nombre', width: 250},
-  { field: 'grupo', headerName: 'Grupo', width: 200, editable: false, },
-  { field: 'acudiente', headerName: 'Acudiente', width: 200, editable: false, },
+  { field: 'id', headerName: 'ID', width: 300 },
+  { field: 'nombre', headerName: 'nombre', width: 250},
 
 ];
 
 
-const DatatableStudent = () => {
+const DatatableAcademica = () => {
   const [dataRows, setDataRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     //Realiza la llamada a la API para obtener los datos
@@ -36,7 +44,7 @@ const DatatableStudent = () => {
         }
         
         // Realizar la solicitud a la API incluyendo el token de autenticación en el encabezado
-        const response = await axios.get('https://render-school.onrender.com/api/estudiante', {
+        const response = await axios.get('https://render-school.onrender.com/api/area', {
           headers: {
             Authorization: `Bearer ${storedToken}`,
             },
@@ -63,13 +71,13 @@ const DatatableStudent = () => {
     width: 200, 
     renderCell: (params)=> (
         <div className="cellAction">
-          <Link to={`/student/view/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/area/view/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <Link to={`/student/delete/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/area/delete/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
           </Link>
-          <Link to={`/student/edit/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/area/edit/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
           </Link>
         </div>
@@ -78,31 +86,17 @@ const DatatableStudent = () => {
   ];
 
   return (
-      <div className='datatableStudent'>
-        <div className="usersStudent">
+      <div className='datatableAcademica'>
+        <div className="usersAcademica">
           <div className="buttons">
-            <Link to="/users">
-              <button>Agregar Persona</button>
-            </Link>
-            <Link to="/student">
-              <button>Agregar estudiante</button>
-            </Link>
-            <Link to="/teacher">
-              <button>Agregar Docente</button>    
-            </Link>
-            <Link to="/attendant">
-              <button>Agregar Acudiente</button>    
-            </Link>
+            <h2>Area Academica</h2>
           </div>
         </div>
         <div className="table">
           <div className="datatableTitle">
-            Nuevo Estudiante
-            <Link to="/student/new" className='linkDatatable'>
-              Agregar
-            </Link>
+            Nueva Area
+            <Academica open={isModalOpen} onClose={handleCloseModal} />
           </div>
-
             <div className="datatable-container">
               {loading ? (
                 <p>Cargando...</p>
@@ -134,4 +128,4 @@ const DatatableStudent = () => {
   );
 };
 
-export default DatatableStudent;
+export default DatatableAcademica;

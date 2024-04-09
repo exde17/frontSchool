@@ -12,6 +12,10 @@ const Company = () => {
   const [selectedComuna, setSelectedComuna] = useState('');
   const [barrios, setBarrios] = useState([]);
   const [selectedBarrio, setSelectedBarrio] = useState('');
+  const [departamento, setDepartamento] = useState([]);
+  const [selectDepartamento, setSelectDepartamento] = useState('');
+  const [ciudad, setCiudad] = useState([]);
+  const [selectCiudad, setSelectCiudad] = useState('');
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -30,9 +34,80 @@ const Company = () => {
     dane: "",
     departamento: "",
     ciudad: "",
+    comuna: "",
+    barrio: "",
+
   });
 
+  // Metodo para traer los departamentos 
+  useEffect(() => {
+      // Obtiene el token del almacenamiento local
+      const storedToken = localStorage.getItem('token');
 
+      // Si no se encuentra el token, muestra un mensaje de error
+      if (!storedToken) {
+        console.error('Token de autenticación no encontrado en el almacenamiento local');
+        return;
+      }
+  
+      // Realiza la solicitud HTTP GET a la API para obtener los datos
+      axios.get('https://render-school.onrender.com/api/departamento', {
+        headers: {
+          'Authorization': `Bearer ${storedToken}` // Incluye el token en el encabezado de autorización
+        }
+      })
+        .then(response => {
+          // Almacena los datos obtenidos en el estado
+          console.log('datos obtenidos exitosamente');
+          setDepartamento( response.data);
+        })
+        .catch(error => {
+          console.error('Error al obtener los datos:', error);
+        });
+  }, []);
+
+  // Metodo para manejar los cambios del select de departamentos 
+  const handleDepartamento = event => {
+    // Maneja el cambio en el select
+    setSelectDepartamento(event.target.value);
+
+  };
+
+    // Metodo para traer las ciudades 
+    useEffect(() => {
+      // Obtiene el token del almacenamiento local
+      const storedToken = localStorage.getItem('token');
+
+      // Si no se encuentra el token, muestra un mensaje de error
+      if (!storedToken) {
+        console.error('Token de autenticación no encontrado en el almacenamiento local');
+        return;
+      }
+  
+      // Realiza la solicitud HTTP GET a la API para obtener los datos
+      axios.get('https://render-school.onrender.com/api/ciudad', {
+        headers: {
+          'Authorization': `Bearer ${storedToken}` // Incluye el token en el encabezado de autorización
+        }
+      })
+        .then(response => {
+          // Almacena los datos obtenidos en el estado
+          console.log('datos obtenidos exitosamente');
+          setCiudad( response.data);
+        })
+        .catch(error => {
+          console.error('Error al obtener los datos:', error);
+        });
+  }, []);
+
+  // Metodo para manejar los cambios del select de departamentos 
+  const handleCiudad = event => {
+    // Maneja el cambio en el select
+    setSelectCiudad(event.target.value);
+  };
+
+
+  // Metodo para traer las comunas
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,7 +136,17 @@ const Company = () => {
   
     fetchData();
   }, []);
+  
 
+  const handleComunaChange = async (event) => {
+    const selectedComunaId = event.target.value;
+    setSelectedComuna(selectedComunaId);
+    // Realizar una solicitud para obtener los barrios de la comuna seleccionada
+    await fetchBarrios(selectedComunaId);
+
+  };
+
+  //metodo para traer los barrios segun la comuna
   const fetchBarrios = async (ComunaId) => {
     try {
       const storedToken = localStorage.getItem('token');
@@ -100,17 +185,14 @@ const Company = () => {
   };
 
   
-  const handleComunaChange = async (event) => {
-    const selectedComunaId = event.target.value;
-    setSelectedComuna(selectedComunaId);
-    // Realizar una solicitud para obtener los barrios de la comuna seleccionada
-    await fetchBarrios(selectedComunaId);
-  };
 
   const handleInput = (event) => {
     const { name, value } = event.target; 
     setFormData({ ...formData, [name]: value });
   };
+
+    
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -118,9 +200,21 @@ const Company = () => {
       if (!token) {
         throw new Error('Token de autenticación no encontrado en el localStorage');
       }
+
+      // Copia el objeto formData actual
+    const updateFormData = { ...formData };
+
+    // Agrega los IDs y el valor de la zona al objeto formData
+    updateFormData.departamento = selectDepartamento;
+    updateFormData.ciudad = selectCiudad;
+    updateFormData.comuna = selectedComuna;
+    updateFormData.barrio = selectedBarrio;
+
+    // Crea un nuevo objeto FormData y agrega los datos actualizados
+    
       const formDataToSend = new FormData();
-      Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+      Object.keys(updateFormData).forEach((key) => {
+        formDataToSend.append(key, updateFormData[key]);
       });
 
       const API_URL = `https://render-school.onrender.com/api/empresa`;
@@ -142,6 +236,9 @@ const Company = () => {
         dane: "",
         departamento: "",
         ciudad: "",
+        comuna: "",
+        barrio: "",
+
       });
 
     } catch (error) {
@@ -165,7 +262,7 @@ const Company = () => {
 
                 <div className='form-pair'>
                   <div className="formInput">   
-                    <label htmlFor="nombre">Nombre</label>
+                    <label htmlFor="nombre">Nombre </label>
                     <input type="text" id="nombre" name="nombre" value={formData.nombre}  onChange={handleInput}/>
                   </div>
                   <div className="formInput">   
@@ -203,14 +300,26 @@ const Company = () => {
                   </div>
                   <div className="formInput">   
                     <label htmlFor="departamento">Departamento</label>
-                    <input type="text" id="departamento" name="departamento" value={formData.departamento}  onChange={handleInput}/>
+                    <select id="departamento" value={selectDepartamento} onChange={handleDepartamento}>
+                      <option value="">Selecciona...</option>
+                      {/* Utiliza map para iterar sobre los datos y generar las opciones del select */}
+                      {departamento.map(option => (
+                        <option key={option.id} value={option.id}>{option.nombre}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
                 <div className='form-pair'>
                   <div className="formInput">   
                     <label htmlFor="ciudad">Ciudad</label>
-                    <input type="text" id="ciudad" name="ciudad" value={formData.ciudad}  onChange={handleInput}/>
+                    <select id="ciudad" value={selectCiudad} onChange={handleCiudad}>
+                      <option value="">Selecciona...</option>
+                      {/* Utiliza map para iterar sobre los datos y generar las opciones del select */}
+                      {ciudad.map(option => (
+                        <option key={option.id} value={option.id}>{option.nombre}</option>
+                      ))}
+                    </select>
                   </div>
                   <div className="formInput">   
                     <label htmlFor="zona">Zona</label>
@@ -235,7 +344,7 @@ const Company = () => {
                             <div className="formInput">
                               <label htmlFor="comuna">Comuna</label>
                               <select name="comuna" id="comuna" value={selectedComuna} onChange={handleComunaChange}>
-                                <option value="">Selecciona...</option>
+                                <option value="seleccione">Selecciona...</option>
                                 {/* Utiliza map para iterar sobre los datos y generar las opciones */}
                                 {comuna.map((option) => (
                                   <option key={option.id} value={option.id}>{option.nombre}</option>
@@ -245,9 +354,9 @@ const Company = () => {
                             <div className="formInput">
                               <label htmlFor="barrio">Barrio</label>
                               <select name="barrio" id="barrio" value={selectedBarrio} onChange={(e) => setSelectedBarrio(e.target.value)}>
-                                <option value="">Selecciona...</option>
+                                <option value="seleccione">Selecciona...</option>
                                 {barrios.map((barrio) => (
-                                  <option key={barrio.id} value={barrio.value}>{barrio.nombre}</option>
+                                  <option key={barrio.id} value={barrio.id}>{barrio.nombre}</option>
                                 ))}
                               </select>
                             </div>
