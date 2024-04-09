@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(1, 114, 1);
+    background: green;
     color: white;
     border: none;
     height: 40px;
@@ -30,9 +30,9 @@
     transition: .3s;
 }
 .container_levels header button:hover {
-    border: 1px solid rgb(1, 114, 1);
+    border: 1px solid green;
     background: white;
-    color: rgb(1, 114, 1);
+    color: green;
 }
 .container_levels section {
     padding: 5px;
