@@ -25,7 +25,14 @@ import ListAcudiente from './pages/listacudiente/ListAcudiente.jsx';
 import Company from './pages/company/Company.jsx';
 import AreaAcademica from './pages/areaacademica/AreaAcademica.jsx';
 import Academica from './components/areaacademica/Academica.jsx';
-
+import DeleteAcademica from './components/areaacademica/DeleteAcademica.jsx';
+import ViewAcademica from './components/areaacademica/ViewAcademica.jsx';
+import EditAcademica from './components/areaacademica/EditAcademica.jsx';
+import ListAsignatura from './pages/listasignatura/ListAsignatura.jsx';
+import CreateAsignatura from './components/asignatura/CreateAsignatura.jsx';
+import ViewAsignatura from './components/asignatura/ViewAsignatura.jsx';
+import EditAsignatura from './components/asignatura/EditAsignatura.jsx';
+import DeleteAsignatura from './components/asignatura/DeleteAsignatura.jsx';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -77,10 +84,19 @@ function App() {
             <Route index element={<Company/>}/>
             <Route path=":seguimiento" element={<Company/>}/>
           </Route>
-          <Route path="other"> 
+          <Route path="area"> 
             <Route index element={<AreaAcademica/>}/>
-            <Route path=":seguimiento" element={<AreaAcademica/>}/>
             <Route path="new" element={<Academica/>}/>
+            <Route path="view/:id" element={<ViewAcademica/>}/>
+            <Route path="edit/:id" element={<EditAcademica/>} />
+            <Route path="delete/:id" element={<DeleteAcademica/>}/> 
+          </Route>
+          <Route path="asignatura"> 
+            <Route index element={<ListAsignatura/>}/>
+            <Route path="new" element={<CreateAsignatura/>}/>
+            <Route path="view/:id" element={<ViewAsignatura/>}/>
+            <Route path="edit/:id" element={<EditAsignatura/>} />
+            <Route path="delete/:id" element={<DeleteAsignatura/>}/> 
           </Route>
         </Routes>
       </Router>
