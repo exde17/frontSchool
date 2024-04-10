@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Modal, Box, TextField, Button, MenuItem } from '@mui/material';
+import { Modal, Box, TextField, Button } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import './createasignatura.css';
 
 const CreateAsignatura = () => {
@@ -8,26 +9,16 @@ const CreateAsignatura = () => {
     const [nombre, setNombre] = useState('');
     const [token, setToken] = useState('');
     const [areasAcademicas, setAreasAcademicas] = useState([]);
-    const [areaAcademicaSeleccionada, setAreaAcademicaSeleccionada] = useState('');
+    const [area, setArea] = useState(null);
 
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
-          setToken(storedToken);
+            setToken(storedToken);
         }
     }, []);
-
-    const handleInputChange = (event) => {
-        setNombre(event.target.value);
-    };
-
-    const handleAreaAcademicaChange = (event) => {
-        setAreaAcademicaSeleccionada(event.target.value);
-    };
-    
 
     useEffect(() => {
         const fetchAreasAcademicas = async () => {
@@ -47,11 +38,24 @@ const CreateAsignatura = () => {
                 console.error('Error al obtener áreas académicas:', error);
             }
         };
-    
+
         fetchAreasAcademicas();
     }, []);
-    
 
+
+    const handleInputChange = (event) => {
+        setNombre(event.target.value);
+    };
+
+    const handleAreaAcademicaChange = (event) => {
+        setArea(event.target.value);
+    };
+
+    const handleClose = () => {
+        setNombre('');
+        setArea('');
+        setOpen(false);
+    };
 
     const handleSubmit = async () => {
         try {
@@ -62,7 +66,7 @@ const CreateAsignatura = () => {
             // Crear un nuevo objeto FormData
             const formData = new FormData();
             formData.append('nombre', nombre);
-            formData.append('codigo', areaAcademicaSeleccionada);
+            formData.append('codigo', area.id);
 
             const response = await axios.post('https://render-school.onrender.com/api/asignatura',
                 formData,
@@ -77,7 +81,7 @@ const CreateAsignatura = () => {
             alert('Datos enviados', response.data);
             // Limpiar el campo después de enviar los datos
             setNombre('');
-            setAreaAcademicaSeleccionada('');
+            setArea('');
             // Cerrar el modal después de enviar los datos
             handleClose();
         } catch (error) {
@@ -94,21 +98,18 @@ const CreateAsignatura = () => {
             <Modal open={open} onClose={handleClose} >
                 <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
                     <h3>Crear Asignatura</h3>
-                    <TextField
-                        select
-                        label="Seleccione el Área"
-                        variant="outlined"
+                    <Autocomplete
+                        id="area"
+                        options={areasAcademicas}
+                        getOptionLabel={(option) => option.nombre}
+                        value={area}
+                        onChange={(event, newValue) => {
+                            setArea(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} label="Seleccione el Área" variant="outlined" />}
                         fullWidth
-                        value={areaAcademicaSeleccionada}
-                        onChange={handleAreaAcademicaChange}
                         sx={{ mb: 2 }}
-                    >
-                        {areasAcademicas.map((area) => (
-                            <MenuItem key={area.id} value={area.id}>
-                                {area.nombre}
-                            </MenuItem>
-                        ))}
-                    </TextField>
+                    />
                     <TextField
                         label="Nombre"
                         variant="outlined"
@@ -118,7 +119,7 @@ const CreateAsignatura = () => {
                         sx={{ mb: 2 }}
                     />
                     <Button variant="outlined" onClick={handleClose} sx={{ mr: 4 }}>Cerrar</Button>
-                    <Button variant="contained" onClick={handleSubmit} >Enviar</Button>
+                    <Button variant="contained" onClick={handleSubmit}>Enviar</Button>
                 </Box>
             </Modal>
         </div>

@@ -23,6 +23,7 @@ import ListStudent from './pages/liststudent/ListStudent.jsx';
 import ListDocente from './pages/listdocente/ListDocente.jsx';
 import ListAcudiente from './pages/listacudiente/ListAcudiente.jsx';
 import Company from './pages/company/Company.jsx';
+import { ListEducationLevels } from './pages/educationLevel/ListEducationLevels.jsx';
 import AreaAcademica from './pages/areaacademica/AreaAcademica.jsx';
 import Academica from './components/areaacademica/Academica.jsx';
 import DeleteAcademica from './components/areaacademica/DeleteAcademica.jsx';
@@ -85,6 +86,9 @@ function App() {
             <Route path=":seguimiento" element={<Company/>}/>
           </Route>
           <Route path="area"> 
+            <Route path="educationLevel" element={<ListEducationLevels />}/>
+          </Route>
+          <Route path="other"> 
             <Route index element={<AreaAcademica/>}/>
             <Route path="new" element={<Academica/>}/>
             <Route path="view/:id" element={<ViewAcademica/>}/>
