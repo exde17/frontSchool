@@ -71,13 +71,13 @@ const DatatableAcademica = () => {
     width: 200, 
     renderCell: (params)=> (
         <div className="cellAction">
-          <Link to={`/area/view/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/other/view/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <Link to={`/area/delete/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/other/delete/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
           </Link>
-          <Link to={`/area/edit/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/other/edit/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
           </Link>
         </div>

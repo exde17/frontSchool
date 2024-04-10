@@ -130,7 +130,7 @@ const Sidebar = () => {
                         {/* Sub-items colapsables */}
                         <Collapse in={colapse} timeout="auto" unmountOnExit>
                             <div className="Item">
-                                <Link to="/area" style={{textDecoration: "none"}}>
+                                <Link to="/other" style={{textDecoration: "none"}}>
                                     <ListItem button >
                                         <span>Area Academica</span>
                                     </ListItem>
