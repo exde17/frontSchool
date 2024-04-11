@@ -17,43 +17,33 @@ const CreateAsignatura = () => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
             setToken(storedToken);
+            fetchAreasAcademicas(storedToken);
         }
-    }, []);
+    }, [token]);
 
-    useEffect(() => {
-        const fetchAreasAcademicas = async () => {
-            try {
-                const storedToken = localStorage.getItem('token');
-                if (!storedToken) {
-                    throw new Error('Token de autenticación no encontrado en el localStorage');
-                }
-                const response = await axios.get('https://render-school.onrender.com/api/area', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-                setAreasAcademicas(response.data);
-            } catch (error) {
-                console.error('Error al obtener áreas académicas:', error);
-            }
-        };
 
-        fetchAreasAcademicas();
-    }, []);
+    const fetchAreasAcademicas = async (token) => {
+        try {
+            const response = await axios.get('https://render-school.onrender.com/api/area', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            setAreasAcademicas(response.data);
+        } catch (error) {
+            console.error('Error al obtener áreas académicas:', error);
+        }
+    };
 
 
     const handleInputChange = (event) => {
         setNombre(event.target.value);
     };
 
-    const handleAreaAcademicaChange = (event) => {
-        setArea(event.target.value);
-    };
-
     const handleClose = () => {
         setNombre('');
-        setArea('');
+        setArea(null);
         setOpen(false);
     };
 

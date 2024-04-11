@@ -12,6 +12,7 @@ import Logout from './components/logout/Logout.jsx';
 import EditUser from './pages/editUser/EditUser.jsx';
 import DeleteUser from './pages/deleteUser/DeleteUser.jsx';
 import DeleteDocente from './components/createdocente/DeleteDocente.jsx';
+import DeleteStudent from './components/createstudent/DeleteStudent.jsx';
 import ViewStudent from './components/createstudent/ViewStudent.jsx';
 import ViewDocente from './components/createdocente/ViewDocente.jsx';
 import CreateAcudiente from './components/createacudiente/CreateAcudiente.jsx';
@@ -60,7 +61,7 @@ function App() {
             <Route path="view/:id" element={<ViewStudent/>}/>
             <Route path="new" element={<CreateStudent/>}/>
             <Route path="edit/:id" element={<EditStudent/>} />
-            <Route path="delete/:id" element={<DeleteUser/>}/> 
+            <Route path="delete/:id" element={<DeleteStudent/>}/> 
           </Route>
           <Route path="teacher"> 
             <Route index element={<ListDocente/>}/>
