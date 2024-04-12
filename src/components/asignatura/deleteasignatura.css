@@ -1,0 +1,58 @@
+.deleteAsignatura {
+    position: fixed; /* Cambiado de absolute a fixed para que la ventana sea fija en la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.windowsAsignatura {
+    background-color: #fff; /* Fondo blanco */
+    padding: 30px; /* Cambiado para un espaciado uniforme */
+    border-radius: 8px; /* Ajustado el radio de borde */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Añadida una sombra para resaltar la ventana */
+}
+
+.buttonGroupAsignatura {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Ajustado el margen superior */
+}
+
+.primaryAsignatura {
+    background-color: #e21212;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 30px;
+    font-size: large;
+    margin-right: 10px; /* Ajustado el margen derecho */
+}
+
+.secondaryAsignatura {
+    background-color: #9c9797;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 30px;
+    font-size: large;
+}
+
+
+.textAsignatura {
+    padding-bottom: 30px;
+    font-weight: 600;
+}
+
+.primaryAsignatura:active {
+    background-color: #ff5252; /* Cambiar a un color diferente cuando se hace clic */
+}
+
+.secondaryAsignatura:active {
+    background-color: #bdbdbd; /* Cambiar a un color diferente cuando se hace clic */
+}

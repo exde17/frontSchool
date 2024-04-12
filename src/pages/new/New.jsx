@@ -16,13 +16,10 @@ const New = () => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
-      fetchCiudades();
-      fetchDepartamentos();
-    } else {
-      // Aquí puedes manejar el caso en el que el token no está disponible
-      console.error('Token de autenticación no encontrado en el localStorage');
+      fetchDepartamentos(storedToken);
+      fetchCiudades(storedToken);
     }
-  }, []);
+  }, [token]);
 
   // Se crea el estado del documento
   const [document, setDocument] = useState(null);
@@ -57,12 +54,8 @@ const New = () => {
   });
   
   // Función para obtener departamentos del endpoint
-  const fetchDepartamentos = async () => {
+  const fetchDepartamentos = async (token) => {
     try {
-      const storedToken = localStorage.getItem('token');
-      if (!storedToken) {
-        throw new Error('Token de autenticación no encontrado en el localStorage');
-      }
       const response = await axios.get('https://render-school.onrender.com/api/departamento',{
         headers: {
           Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
@@ -72,17 +65,12 @@ const New = () => {
       setDepartamentos(response.data);
     } catch (error) {
       console.error('Error al obtener departamentos:', error);
-
     }
   };
 
   // Función para obtener ciudades del endpoint
-  const fetchCiudades = async () => {
+  const fetchCiudades = async (token) => {
     try {
-      const storedToken = localStorage.getItem('token');
-      if (!storedToken) {
-        throw new Error('Token de autenticación no encontrado en el localStorage');
-      }
       const response = await axios.get('https://render-school.onrender.com/api/ciudad',{
         headers: {
           Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
@@ -92,7 +80,6 @@ const New = () => {
       setCiudades(response.data);
     } catch (error) {
       console.error('Error al obtener ciudades:', error);
-
     }
   };
 
@@ -114,14 +101,15 @@ const New = () => {
       if (document) {
         formDataToSend.append("document", document);
       }
-
       // Agrega los IDs de departamento y ciudad al formDataToSend
       formDataToSend.append("departamento", formData.departamento.id);
       formDataToSend.append("ciudad", formData.ciudad.id);
 
       // Agregar los demás datos del formulario al formDataToSend
       Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+        if (key !== "departamento" && key !== "ciudad") { // Evita agregar departamento y ciudad nuevamente
+          formDataToSend.append(key, formData[key]);
+        }
       });
 
       // Enviar formDataToSend al endpoint
@@ -133,6 +121,7 @@ const New = () => {
         },
       });
       console.log('Respuesta del servidor:', response.data);
+      alert('Datos enviados con exito');
       // Restablecer los campos del formulario después de enviarlos
       setFormData({
 
@@ -234,24 +223,18 @@ const New = () => {
                     options={departamentos}
                     getOptionLabel={(option) => option ? option.nombre : ""}
                     value={formData.departamento}
-                    onChange={(event, value) => {
-                      setFormData({ ...formData, departamento: value });
-                      if (value) {
-                        fetchCiudades(value.id);
-                      }
-                    }}
+                    onChange={(event, value) => setFormData({ ...formData, departamento: value})} // Guarda solo la ID del departamento}}
                     renderInput={(params) => <TextField {...params} label="Seleccione" variant="standard" />}
                   />
-                </div> 
-
+                </div>
                 <div className="formInput">
-                  <label htmlFor="ciudad">Ciudad</label>
+                  <label htmlFor="departamento">Ciudades</label>
                   <Autocomplete
                     id="ciudad"
                     options={ciudades}
                     getOptionLabel={(option) => option ? option.nombre : ""}
                     value={formData.ciudad}
-                    onChange={(event, value) => setFormData({ ...formData, ciudad: value })}
+                    onChange={(event, value) => setFormData({ ...formData, ciudad: value})}
                     renderInput={(params) => <TextField {...params} label="Seleccione" variant="standard" />}
                   />
                 </div>
