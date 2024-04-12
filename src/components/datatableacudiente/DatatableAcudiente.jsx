@@ -73,13 +73,13 @@ const DatatableAcudiente = () => {
     width: 200, 
     renderCell: (params)=> (
         <div className="cellAction">
-          <Link to={`/teacher/view/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/attendant/view/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <Link to={`/teacher/delete/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/attendant/delete/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
           </Link>
-          <Link to={`/teacher/edit/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/attendant/edit/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
           </Link>
         </div>

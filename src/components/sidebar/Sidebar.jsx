@@ -135,9 +135,11 @@ const Sidebar = () => {
                                         <span>Area Academica</span>
                                     </ListItem>
                                 </Link>
-                                <ListItem button>
-                                    <span>Asignatura</span>
-                                </ListItem>
+                                <Link to="/asignatura" style={{textDecoration: "none"}}>
+                                    <ListItem button>
+                                        <span>Asignatura</span>
+                                    </ListItem>
+                                </Link>    
                             </div>
                             
                         </Collapse>

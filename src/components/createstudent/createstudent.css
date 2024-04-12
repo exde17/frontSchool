@@ -59,7 +59,7 @@
     padding-left: 40%;
 }
 
-.createStudent button{
+.createStudent .enviar{
     width: 150px;
     padding: 10px;
     border: none;

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './datatableacademica.css';
+import './datatableasignatura.css';
 import { Link } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import Academica from '../areaacademica/Academica';
+import CreateAsignatura from '../asignatura/CreateAsignatura';
 
 
 const columns = [
@@ -17,7 +17,7 @@ const columns = [
 ];
 
 
-const DatatableAcademica = () => {
+const DatatableAsignatura = () => {
   const [dataRows, setDataRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +44,7 @@ const DatatableAcademica = () => {
         }
         
         // Realizar la solicitud a la API incluyendo el token de autenticación en el encabezado
-        const response = await axios.get('https://render-school.onrender.com/api/area', {
+        const response = await axios.get('https://render-school.onrender.com/api/asignatura', {
           headers: {
             Authorization: `Bearer ${storedToken}`,
             },
@@ -71,13 +71,13 @@ const DatatableAcademica = () => {
     width: 200, 
     renderCell: (params)=> (
         <div className="cellAction">
-          <Link to={`/other/view/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/asignatura/view/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Ver"><div className='viewButton'><VisibilityIcon/></div></abbr>
           </Link>
-          <Link to={`/other/delete/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/asignatura/delete/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Eliminar"><div className='deleteButton'><DeleteIcon className='iconDelete'/></div></abbr>
           </Link>
-          <Link to={`/other/edit/${params.row.id}`} style={{textDecoration: "none"}}>
+          <Link to={`/asignatura/edit/${params.row.id}`} style={{textDecoration: "none"}}>
             <abbr title="Editar"><div className='editButton'><EditIcon/></div></abbr>
           </Link>
         </div>
@@ -86,16 +86,16 @@ const DatatableAcademica = () => {
   ];
 
   return (
-      <div className='datatableAcademica'>
-        <div className="usersAcademica">
+      <div className='datatableAsignatura'>
+        <div className="usersAsignatura">
           <div className="buttons">
-            <h2>Area Academica</h2>
+            <h2>Asignaturas</h2>
           </div>
         </div>
         <div className="table">
           <div className="datatableTitle">
-            Nueva Area
-            <Academica open={isModalOpen} onClose={handleCloseModal} />
+            Nueva Asigantura
+            <CreateAsignatura open={isModalOpen} onClose={handleCloseModal} />
           </div>
             <div className="datatable-container">
               {loading ? (
@@ -128,4 +128,4 @@ const DatatableAcademica = () => {
   );
 };
 
-export default DatatableAcademica;
+export default DatatableAsignatura;

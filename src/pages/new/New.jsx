@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Autocomplete, TextField } from '@mui/material';
 import img from "../../img/no-image-found.png"
 import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
@@ -7,20 +8,22 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import "./new.css"
 
 const New = () => {
-
+  const [departamentos, setDepartamentos] = useState([]);
+  const [ciudades, setCiudades] = useState([]);
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    // Verifica si el token está en el localStorage al cargar el componente
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
+      fetchDepartamentos(storedToken);
+      fetchCiudades(storedToken);
     }
-  }, []);
+  }, [token]);
 
   // Se crea el estado del documento
   const [document, setDocument] = useState(null);
-  
+
   const handleDocument = (event) =>{
     const selectedDocument = event.target.files[0];
     setDocument(selectedDocument);
@@ -29,7 +32,6 @@ const New = () => {
   //Estado de la imagen de perfil
   const [ file, setFile ] = useState("");
 
-  
   const [ formData, setFormData] = useState({
     
     nombre: "",
@@ -51,6 +53,37 @@ const New = () => {
 
   });
   
+  // Función para obtener departamentos del endpoint
+  const fetchDepartamentos = async (token) => {
+    try {
+      const response = await axios.get('https://render-school.onrender.com/api/departamento',{
+        headers: {
+          Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
+          'Content-Type': 'application/json' // Especifica el tipo de contenido como JSON
+        },
+      });
+      setDepartamentos(response.data);
+    } catch (error) {
+      console.error('Error al obtener departamentos:', error);
+    }
+  };
+
+  // Función para obtener ciudades del endpoint
+  const fetchCiudades = async (token) => {
+    try {
+      const response = await axios.get('https://render-school.onrender.com/api/ciudad',{
+        headers: {
+          Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
+          'Content-Type': 'application/json' // Especifica el tipo de contenido como JSON
+        },
+      });
+      setCiudades(response.data);
+    } catch (error) {
+      console.error('Error al obtener ciudades:', error);
+    }
+  };
+
+
   const handleInput = (event) =>{
     const {name, value } = event.target; 
     setFormData({...formData, [name]: value});
@@ -59,23 +92,24 @@ const New = () => {
 
   const handleSubmit = async (event,) => {
     event.preventDefault();
-    
     try {
-      //________________________
       if (!token) {
         throw new Error('Token de autenticación no encontrado en el localStorage');
       }
-      //________________________
-
       const formDataToSend = new FormData();
       // Agregar los archivos al formDataToSend
       if (document) {
         formDataToSend.append("document", document);
       }
+      // Agrega los IDs de departamento y ciudad al formDataToSend
+      formDataToSend.append("departamento", formData.departamento.id);
+      formDataToSend.append("ciudad", formData.ciudad.id);
 
       // Agregar los demás datos del formulario al formDataToSend
       Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+        if (key !== "departamento" && key !== "ciudad") { // Evita agregar departamento y ciudad nuevamente
+          formDataToSend.append(key, formData[key]);
+        }
       });
 
       // Enviar formDataToSend al endpoint
@@ -85,15 +119,9 @@ const New = () => {
           Authorization: `Bearer ${token}`, // Incluye el token de autenticación en el encabezado
           'Content-Type': 'application/json' // Especifica el tipo de contenido como JSON
         },
-        //_________________________
-        // Aquí puedes enviar los datos que deseas al endpoint
-        formData: formData,
-        
-        // Puedes agregar más datos según sea necesario
       });
-  
       console.log('Respuesta del servidor:', response.data);
-  
+      alert('Datos enviados con exito');
       // Restablecer los campos del formulario después de enviarlos
       setFormData({
 
@@ -121,7 +149,6 @@ const New = () => {
     }
   };
  
-
   
   return (
     <div className="new">
@@ -156,7 +183,7 @@ const New = () => {
                   <select id="tipoIdentificacion" name="tipoIdentificacion" value={formData.tipoIdentificacion} onChange={handleInput}>
                     <option value="">Seleccione una opcion</option>
                     <option value="CC">Cedula Ciudadanía</option>
-                    <option value="CE">Cedula Ciudadanía</option>
+                    <option value="CE">Cedula Extranjeria</option>
                     <option value="TI">Targeta Identidad</option>  
                   </select>
                 </div>
@@ -187,13 +214,29 @@ const New = () => {
                   <label htmlFor="telefono">Tel</label>
                   <input type="text" id="telefono" name="telefono" value={formData.telefono}  onChange={handleInput}/>
                 </div>
+
+
                 <div className="formInput">
                   <label htmlFor="departamento">Departamento</label>
-                  <input type="text" id="departamento" name="departamento" value={formData.departamento} onChange={handleInput}/>
+                  <Autocomplete
+                    id="departamento"
+                    options={departamentos}
+                    getOptionLabel={(option) => option ? option.nombre : ""}
+                    value={formData.departamento}
+                    onChange={(event, value) => setFormData({ ...formData, departamento: value})} // Guarda solo la ID del departamento}}
+                    renderInput={(params) => <TextField {...params} label="Seleccione" variant="standard" />}
+                  />
                 </div>
                 <div className="formInput">
-                  <label htmlFor="ciudad">ciudad</label>
-                  <input type="text" id="ciudad" name="ciudad" value={formData.ciudad}  onChange={handleInput}/>
+                  <label htmlFor="departamento">Ciudades</label>
+                  <Autocomplete
+                    id="ciudad"
+                    options={ciudades}
+                    getOptionLabel={(option) => option ? option.nombre : ""}
+                    value={formData.ciudad}
+                    onChange={(event, value) => setFormData({ ...formData, ciudad: value})}
+                    renderInput={(params) => <TextField {...params} label="Seleccione" variant="standard" />}
+                  />
                 </div>
 
 
@@ -220,7 +263,7 @@ const New = () => {
                   accept=".pdf, .doc, .docx, .jpg, .jpeg, .png"/>
                 </div>
                 <div className="boton">
-                  <button type='submit'>Enviar</button>
+                  <button className='enviar' type='submit'>Enviar</button>
                 </div>
               </form>
             </div>
