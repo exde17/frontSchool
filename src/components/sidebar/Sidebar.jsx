@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./sidebar.css";
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import BookIcon from '@mui/icons-material/Book';
@@ -65,11 +65,11 @@ const Sidebar = () => {
                         <span>Home</span>
                     </li>
                 </Link>
-                <p className="title">ESTUDIANTES</p>
+                <p className="title">USUARIOS</p>
                 <Link to="/users" style={{textDecoration: "none"}}>
                     <li>
-                        <PersonAddIcon className="icon"/>
-                        <span>Nuevo Registro</span>
+                        <AccountBoxIcon className="icon"/>
+                        <span>Gestionar</span>
                     </li>
                 </Link>
                 <p className="title">NIVELES EDUCATIVOS</p>

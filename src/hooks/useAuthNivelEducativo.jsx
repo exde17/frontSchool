@@ -10,7 +10,7 @@ export function useAuthNivelEducativo() {
     nombre: "",
     codigo: "",
   });
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -48,10 +48,18 @@ export function useAuthNivelEducativo() {
 
   const cargarNivelesEducativos = async () => {
     try {
-      setLoading(true);
-      const data = await consultarNivelesEducativos();
-      setLoading(false);
-      setNivelesEducativos(data);
+      if (!token) {
+        alert("Token de autenticación no encontrado en el localStorage");
+        setLoading(false);
+        throw new Error(
+          "Token de autenticación no encontrado en el localStorage"
+        );
+      } else {
+        setLoading(true);
+        const data = await consultarNivelesEducativos();
+        setLoading(false);
+        setNivelesEducativos(data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -127,9 +135,12 @@ export function useAuthNivelEducativo() {
 
   async function eliminacionConfirmada(id) {
     try {
-      await axios.delete("https://render-school.onrender.com/api/nivel-educativo/" + id, {
-        options,
-      });
+      await axios.delete(
+        "https://render-school.onrender.com/api/nivel-educativo/" + id,
+        {
+          options,
+        }
+      );
       Swal.fire({
         icon: "success",
         title: "¡Eliminado!",
@@ -160,10 +171,11 @@ export function useAuthNivelEducativo() {
     const nivelActualizar = {
       nombre: nivelEducativo.nombre,
       codigo: nivelEducativo.codigo,
-    }
+    };
     try {
       const response = await axios.patch(
-        "https://render-school.onrender.com/api/nivel-educativo/" + nivelEducativo.id,
+        "https://render-school.onrender.com/api/nivel-educativo/" +
+          nivelEducativo.id,
         nivelActualizar,
         { options }
       );
@@ -177,7 +189,7 @@ export function useAuthNivelEducativo() {
         });
         recargar();
         toggleModal();
-      }else{
+      } else {
         Swal.fire({
           icon: "warning",
           title: "¡No completado!",
