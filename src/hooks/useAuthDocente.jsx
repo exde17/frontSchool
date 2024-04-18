@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { consultarDocentes } from "../services/AuthService";
+import { consultarDocente, consultarDocentes } from "../services/AuthService";
 import { useAuthPersona } from "./useAuthPersona";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export function useAuthDocente() {
+export function useAuthDocente(idDocenteActualizar) {
+  const navigate = useNavigate();
   const [docentes, setDocentes] = useState([]);
   const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("token");
   const [busquedaDocente, setBusquedaDocente] = useState("");
   const [persona, setPersona] = useState({});
+  const [docente, setDocente] = useState({});
   const [estadoBusqueda, setEstadoBusqueda] = useState("");
-
   const { personas } = useAuthPersona();
+  const [idcategoria, setIdCategoria] = useState({
+    categoriaFuncionario: "",
+  });
 
   const handleChangeBusqueda = ({ target }) => {
     setBusquedaDocente(target.value);
+  };
+
+  const handleChange = ({ target }) => {
+    setIdCategoria({
+      ...idcategoria,
+      [target.name]: target.value,
+    });
   };
 
   const cargarDocentes = async () => {
@@ -38,29 +50,42 @@ export function useAuthDocente() {
   };
 
   const buscarPersona = () => {
-    const persona = personas.filter(
-      (persona) => persona.identificacion === busquedaDocente
-    );
-    if (persona.length > 0) {
-      setPersona(persona[0]);
-      setBusquedaDocente("");
-      setEstadoBusqueda("Con persona");
-    } else {
-      setEstadoBusqueda("Sin persona");
-    }
-  };
-  const registrarDocente = async (id, idCategoria) => {
-    if (id === "" || idCategoria === "") {
+    if (busquedaDocente === "") {
       Swal.fire({
         icon: "info",
         title: "¡Cuidado!",
         text: "Todos los campos son obligatorios...",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } else {
+      const persona = personas.filter(
+        (persona) => persona.identificacion === busquedaDocente
+      );
+      if (persona.length > 0) {
+        setPersona(persona[0]);
+        setBusquedaDocente("");
+        setEstadoBusqueda("Con persona");
+      } else {
+        setEstadoBusqueda("Sin persona");
+      }
+    }
+  };
+  const registrarDocente = async (id) => {
+    console.log(id, idcategoria.categoriaFuncionario);
+    if (id === "" || idcategoria.categoriaFuncionario === "") {
+      Swal.fire({
+        icon: "info",
+        title: "¡Cuidado!",
+        text: "Todos los campos son obligatorios...",
+        timer: 2000,
+        showConfirmButton: false,
       });
     } else {
       try {
         const docente = {
           persona: id,
-          categoriaFuncionario: idCategoria,
+          categoriaFuncionario: idcategoria.categoriaFuncionario,
         };
         const data = await axios.post(
           "https://render-school.onrender.com/api/docente",
@@ -71,6 +96,7 @@ export function useAuthDocente() {
             },
           }
         );
+        console.log(data);
         if (data.data.message == "Docente creado correctamente") {
           Swal.fire({
             icon: "success",
@@ -79,14 +105,15 @@ export function useAuthDocente() {
             showConfirmButton: false,
             timer: 2000,
           });
-          setBusquedaDocente("")
-          setEstadoBusqueda("Persona registrada")
+          setBusquedaDocente("");
+          setEstadoBusqueda("Persona registrada");
           cargarDocentes();
+          navigate("/teacher");
         } else {
           Swal.fire({
             icon: "warning",
             title: "¡No completado!",
-            text: "Ya existe una persona con estos datos...",
+            text: "Ya existe un docente con estos datos...",
             showConfirmButton: false,
             timer: 2000,
           });
@@ -97,7 +124,7 @@ export function useAuthDocente() {
 
   const eliminarDocente = async (id) => {
     Swal.fire({
-      title: "¿Seguro que desea eliminarla?",
+      title: "¿Seguro que desea eliminarlo?",
       icon: "question",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -123,7 +150,7 @@ export function useAuthDocente() {
       Swal.fire({
         icon: "success",
         title: "¡Eliminado!",
-        text: "Docente eliminada...",
+        text: "Funcionario eliminado...",
         showConfirmButton: false,
         timer: 2000,
       });
@@ -146,8 +173,118 @@ export function useAuthDocente() {
     }
   }
 
+  const buscarDocenteActualizar = async () => {
+    if (idDocenteActualizar !== undefined) {
+      const data = await consultarDocente(idDocenteActualizar);
+      console.log(data);
+      if (data) {
+        setPersona(data.persona);
+        setDocente(data);
+        setEstadoBusqueda("Con persona");
+      } else {
+        setEstadoBusqueda("Sin persona");
+      }
+    }
+  };
+
+  const actualizarDocente = async () => {
+    if (idcategoria.categoriaFuncionario !== "") {
+      try {
+        const docenteActualizar = {
+          persona: persona.id,
+          categoriaFuncionario: idcategoria.categoriaFuncionario,
+        };
+        const data = await axios.patch(
+          "https://render-school.onrender.com/api/docente/" +
+            idDocenteActualizar,
+          docenteActualizar,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (data.data.message == "Docente actualizado correctamente") {
+          Swal.fire({
+            icon: "success",
+            title: "¡Actualizado!",
+            text: "Docente actualizado...",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "¡Error!",
+          text: "Error al actualizar...",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        if (error.response) {
+        } else if (error.request) {
+          console.error("No se recibio respuesta del servidor");
+        } else {
+          console.log("Error al actualizar al usuario");
+        }
+      }
+    } else {
+      try {
+        const docenteActualizar = {
+          persona: persona.id,
+          categoriaFuncionario: docente.categoriaFuncionario.id,
+        };
+        const data = await axios.patch(
+          "https://render-school.onrender.com/api/docente/" +
+            idDocenteActualizar,
+          docenteActualizar,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (data.data.message == "Docente actualizado correctamente") {
+          Swal.fire({
+            icon: "success",
+            title: "¡Actualizado!",
+            text: "Docente actualizado...",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          navigate("/teacher");
+        } else {
+          Swal.fire({
+            icon: "info",
+            title: "¡Cuidado!",
+            text: "Esta persona ya esta asignada como docente...",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "¡Error!",
+          text: "Error al actualizar...",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        if (error.response) {
+        } else if (error.request) {
+          console.error("No se recibio respuesta del servidor");
+        } else {
+          console.log("Error al actualizar al usuario");
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     cargarDocentes();
+    buscarDocenteActualizar();
   }, []);
 
   return {
@@ -155,10 +292,13 @@ export function useAuthDocente() {
     loading,
     busquedaDocente,
     persona,
+    docente,
     estadoBusqueda,
     handleChangeBusqueda,
     buscarPersona,
     registrarDocente,
     eliminarDocente,
+    actualizarDocente,
+    handleChange,
   };
 }

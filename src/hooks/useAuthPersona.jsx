@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { consultarPersonas } from "../services/AuthService";
-import Swal from "sweetalert2";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { consultarPersonas } from "../services/AuthService";
+import { useAuthBarrio } from "./useAuthBarrio";
+import { useAuthComuna } from "./useAuthComuna";
+import { useAuthCorregimiento } from "./useAuthCorregimiento";
+import { useAuthVereda } from "./useAuthVereda";
+import { useAuthCiudad } from "./useAuthCiudad";
 
 export function useAuthPersona() {
+  const { ciudades } = useAuthCiudad();
+  const { corregimientos } = useAuthCorregimiento();
+  const { barrios } = useAuthBarrio();
+  const { veredas } = useAuthVereda();
+  const { comunas } = useAuthComuna();
   const [personas, setPersonas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -146,8 +156,7 @@ export function useAuthPersona() {
         title: "¡Cuidado!",
         text: "Todos los campos son obligatorios...",
       });
-    }
-    else {
+    } else {
       const nuevosDatos = { ...persona };
       if (persona.barrio === "") {
         delete nuevosDatos.barrio;
@@ -272,6 +281,10 @@ export function useAuthPersona() {
     }
   };
 
+  const filtrarCiudad = () => {
+      //  ciudades = ciudades.filter(ciudad => ciudad. === persona.ciudad)
+  }
+
   useEffect(() => {
     cargarPersonas();
   }, []);
@@ -287,5 +300,10 @@ export function useAuthPersona() {
     loading,
     openModal,
     persona,
+    ciudades,
+    corregimientos,
+    barrios,
+    veredas,
+    comunas,
   };
 }

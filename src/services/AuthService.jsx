@@ -114,15 +114,47 @@ export const consultarFuncionario = async () => {
   );
   return data.data;
 };
-// export const registrarPersona = async (persona) => {
-//   const data = await axios.post(
-//     "https://render-school.onrender.com/api/persona",
-//     persona,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     }
-//   );
-//   return data;
-// }
+export const consultarDocente = async (id) => {
+  const data = await axios.get(
+    `https://render-school.onrender.com/api/docente/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data.data;
+};
+export const consultarAcudientes = async () => {
+  const data = await axios.get(
+    "https://render-school.onrender.com/api/acudiente",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data.data;
+};
+export const consultarEstudiantes = async () => {
+  const data = await axios.get(
+    "https://render-school.onrender.com/api/estudiante",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data.data;
+};
+export const consultarAcudiente = async (id) => {
+  const data = await axios.get(
+    "https://render-school.onrender.com/api/acudiente/" + id,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data.data;
+};

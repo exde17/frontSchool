@@ -5,6 +5,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import "./login.css";
 import ram from "./conexion";
+import Spiner from "../../utils/spiner/Spiner";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -43,7 +44,6 @@ const Login = () => {
   };
   return (
     <div className="login">
-      {cargando && <p className="cargando">Cargando...</p>}
       {showAlert && (
         <div className="floating-alert">
           <span>{alertMessage}</span>
@@ -89,7 +89,7 @@ const Login = () => {
           </div>
         </div>
         <footer className="btn-iniciar">
-          <button>Iniciar sesion</button>
+          <button>{cargando ? <Spiner /> : "Iniciar sesion"}</button>
         </footer>
       </form>
     </div>

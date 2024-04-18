@@ -15,7 +15,6 @@ import DeleteDocente from "./components/createdocente/DeleteDocente.jsx";
 import DeleteStudent from "./components/createstudent/DeleteStudent.jsx";
 import ViewStudent from "./components/createstudent/ViewStudent.jsx";
 import ViewDocente from "./components/createdocente/ViewDocente.jsx";
-import CreateAcudiente from "./components/createacudiente/CreateAcudiente.jsx";
 import CreateStudent from "./components/createstudent/CreateStudent.jsx";
 import CreateDocente from "./components/createdocente/CreateDocente.jsx";
 import EditStudent from "./components/createstudent/EditStudent.jsx";
@@ -35,6 +34,7 @@ import CreateAsignatura from "./components/asignatura/CreateAsignatura.jsx";
 import ViewAsignatura from "./components/asignatura/ViewAsignatura.jsx";
 import EditAsignatura from "./components/asignatura/EditAsignatura.jsx";
 import DeleteAsignatura from "./components/asignatura/DeleteAsignatura.jsx";
+import CreateAcudiente from "./components/createacudiente/CreateAcudiente.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -67,6 +67,7 @@ function App() {
             <Route index element={<ListDocente />} />
             <Route path="view/:id" element={<ViewDocente />} />
             <Route path="new" element={<CreateDocente />} />
+            <Route path="new/:id" element={<CreateDocente />} />
             <Route path="edit/:id" element={<EditDocente />} />
             <Route path="delete/:id" element={<DeleteDocente />} />
           </Route>
@@ -74,6 +75,7 @@ function App() {
             <Route index element={<ListAcudiente />} />
             <Route path="view/:id" element={<ViewDocente />} />
             <Route path="new" element={<CreateAcudiente />} />
+            <Route path="new/:id" element={<CreateAcudiente />} />
             <Route path="edit/:id" element={<EditDocente />} />
             <Route path="delete/:id" element={<DeleteDocente />} />
           </Route>

@@ -184,6 +184,14 @@
     justify-content: flex-start;
     align-items: center;
 }
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent label select{
+    height: 100%;
+    width: 100%;
+    border: none !important;
+    border-radius: 10px;
+    margin: 0 0 0 5px;
+    font-size: 15px;
+}
 .bottomCreate .formulario-contenedor .contenido .footer .labelContent .btn-buscar{
     margin-top: 5px;
     width: 10rem;
@@ -206,6 +214,29 @@
     background: white;
     color: green;
     border: 1px solid green;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent .btn-actualizar{
+    margin-top: 5px;
+    width: 10rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: none;
+    background: blue;
+    color: white;
+    font-size: 15px;
+    font-family: 'Cascadia Code',Consolas, 'Courier New', monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .btn-actualizar:hover{
+    background: white;
+    color: blue;
+    border: 1px solid blue;
 }
 .bottomCreate .formulario-contenedor .contenido .resultado-persona .personaNoEncontrada h1{
     display: flex;

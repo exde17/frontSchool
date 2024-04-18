@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 export default function DatatableDocente({
   docentes,
-  loanding,
+  loading,
   eliminarDocente,
 }) {
   const columns = [
@@ -30,12 +30,13 @@ export default function DatatableDocente({
               style={{ marginTop: "4px", color: "red" }}
             />
           </button>
-          <button
-            style={{ border: "none", cursor: "pointer", background: "none" }}
-            // onClick={() => capturarInformacion(row)}
-          >
-            <EditIcon style={{ marginTop: "4px", color: "blue" }} />
-          </button>
+          <Link to={`/teacher/new/${row.id}`}>
+            <button
+              style={{ border: "none", cursor: "pointer", background: "none" }}
+            >
+              <EditIcon style={{ marginTop: "4px", color: "blue" }} />
+            </button>
+          </Link>
           <Link to={`/users/test/${row.id}`}>
             <button
               style={{ border: "none", cursor: "pointer", background: "none" }}
@@ -56,7 +57,7 @@ export default function DatatableDocente({
     },
     {
       name: "Persona",
-      selector: (row) => row.persona,
+      selector: (row) => row.nombre,
       sortable: true,
     },
     {
@@ -94,7 +95,7 @@ export default function DatatableDocente({
         <section className="content-card-docente">
           <main className="informacion">
             <RecordVoiceOverIcon />
-            <h2>Docente</h2>
+            <h2>Funcionario</h2>
           </main>
           <Link to="/teacher">
             <button>GESTIONAR</button>
@@ -115,9 +116,8 @@ export default function DatatableDocente({
         <header>
           <Link to="/teacher/new" style={{ textDecoration: "none" }}>
             <button
-              // onClick={toggleModal}
               style={{
-                width: "13rem",
+                width: "15rem",
                 textTransform: "uppercase",
                 fontWeight: "bold",
               }}
@@ -126,7 +126,7 @@ export default function DatatableDocente({
                 className="icon-registrar"
                 style={{ margin: "0 2px 0 0" }}
               />
-              Registrar Docente
+              Registrar funcionario
             </button>
           </Link>
         </header>
@@ -134,7 +134,7 @@ export default function DatatableDocente({
           <DataTable
             columns={columns}
             data={docentes}
-            progressPending={loanding}
+            progressPending={loading}
             pagination
           />
         </section>

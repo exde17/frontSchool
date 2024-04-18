@@ -158,7 +158,6 @@ const Single = () => {
         </div>
         <div className="bottom">
           <h1 className="calificaciones">Calificaciones</h1>
-        
         </div>
       </div>
     </div>

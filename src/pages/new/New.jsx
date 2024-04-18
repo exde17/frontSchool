@@ -6,12 +6,14 @@ import Navbar from "../../components/navbar/Navbar"
 import Sidebar from "../../components/sidebar/Sidebar"
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import "./new.css"
+import { useParams } from "react-router-dom";
 
 const New = () => {
   const [departamentos, setDepartamentos] = useState([]);
   const [ciudades, setCiudades] = useState([]);
   const [token, setToken] = useState('');
-
+  const { docenteActualizar } = useParams();
+  
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) {

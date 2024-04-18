@@ -1,59 +1,267 @@
-.createAcudiente{
+.createDocente{
     width: 100%;
     display: flex;
-    
 }
 
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo gris casi transparente */
-    z-index: 999; /* Asegura que la ventana modal esté por encima de otros elementos */
-  }
-  
-  .modal-content {
-    display: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    z-index: 1000; /* Asegura que el contenido de la ventana modal esté por encima del fondo gris */
-  }
-  
-  .modal-overlay.open,
-  .modal-content.open {
-    display: block;
-  }
-  
-  h3{
-    padding-bottom: 30px;
-  }
-  
-  .cerrar{
-    padding: 10px 40px;
-    border-radius: 8px;
-    margin-right: 60px;
-    background-color: rgba(255, 0, 0, 0.752);
-    border: none;
-    color: white;
-    font-weight: 800;
-    font-family: Arial, Helvetica, sans-serif;
-  }
+.containerCreate{
+    flex: 6;
+}
 
-  .crear{
-    display: column;
-    padding: 10px 45px;
-    border-radius: 8px;
-    margin-top: 40px;
-    background-color: rgb(19, 160, 101);
+.bottomCreate{
+    margin-top: -18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: none;
+}
+.bottomCreate .formulario-contenedor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    height: 35.5rem;
+    border-radius: 5%;
+    width: 90%;
+}
+.bottomCreate .formulario-contenedor .header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 5rem;
+    background: transparent;
+    margin: 0 0 5px 0;
+}
+.bottomCreate .formulario-contenedor .header .imagen-header{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    margin: 0 5px 0 0;
+}
+.bottomCreate .formulario-contenedor .header .imagen-header img{
+    width: 100%;
+    border-radius: 50%;
+}
+.bottomCreate .formulario-contenedor .header h1{
+    color: rgb(73, 70, 70);
+    font-size: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: semibold;
+}
+.bottomCreate .formulario-contenedor .contenido{
+    height: 100%;
+    width: 100%;
+    box-shadow: 1px 1px 3px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px;
+}
+.bottomCreate .formulario-contenedor .contenido h1{
+    font-size: 19px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0 0 0 20px;
+}
+.bottomCreate .formulario-contenedor .contenido .labelContent{
+    margin: 30px 0 0 20px;
     border: none;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+.bottomCreate .formulario-contenedor .contenido .labelContent fieldset {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    border: none;
+}
+.bottomCreate .formulario-contenedor .contenido .labelContent input{
+    font-family: unset;
+    font-size: 15px;
+    width: 90%;
+    height: 2.5rem;
+    border: 1px solid gray;
+    margin: 5px 5px 0 0;
+    border-radius: 10px;
+    text-indent: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bottomCreate .formulario-contenedor .contenido .labelContent .btn-buscar{
+    margin-top: 5px;
+    width: 10rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: none;
+    background: #7451F8;
     color: white;
-    font-weight: 800;
-    font-family: Arial, Helvetica, sans-serif;
-  }
+    font-size: 15px;
+    font-family: 'Cascadia Code',Consolas, 'Courier New', monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+.bottomCreate .formulario-contenedor .contenido .labelContent .btn-buscar:hover{
+    background: #4D0E9F;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    margin: 20px 0 15px 0;
+    flex-wrap: wrap;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona .informacion-persona{
+    margin: 0 20px 10px 0;
+    width: 20rem;
+    height: 3rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-indent: 15px;
+    color: gray;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona .informacion-persona .icon{
+    margin: 0 0 0 10px;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona .img-content{
+    width: 5rem;
+    height: 5rem;
+    margin: 0 80px 0 0;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona .img-content img{
+    width: 100%;
+    border-radius: 50%;
+}
+.bottomCreate .formulario-contenedor .contenido .footer{
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent{
+    margin: -10px 0 0 60px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent fieldset {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    border: none;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent label{
+    font-size: 15px;
+    width: 90%;
+    height: 2.5rem;
+    border: 1px solid gray;
+    margin: 5px 5px 0 0;
+    border-radius: 10px;
+    text-indent: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent label select{
+    height: 100%;
+    width: 100%;
+    border: none !important;
+    border-radius: 10px;
+    margin: 0 0 0 5px;
+    font-size: 15px;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent .btn-buscar{
+    margin-top: 5px;
+    width: 10rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: none;
+    background: green;
+    color: white;
+    font-size: 15px;
+    font-family: 'Cascadia Code',Consolas, 'Courier New', monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .btn-buscar:hover{
+    background: white;
+    color: green;
+    border: 1px solid green;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .labelContent .btn-actualizar{
+    margin-top: 5px;
+    width: 10rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: none;
+    background: blue;
+    color: white;
+    font-size: 15px;
+    font-family: 'Cascadia Code',Consolas, 'Courier New', monospace;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+.bottomCreate .formulario-contenedor .contenido .footer .btn-actualizar:hover{
+    background: white;
+    color: blue;
+    border: 1px solid blue;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona .personaNoEncontrada h1{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 26rem;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona .personaBuscar h1{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 15rem;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+}
+.bottomCreate .formulario-contenedor .contenido .resultado-persona .personaRegistrada h1{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 28rem;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+}

@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./createdocente.css";
 import addDocente from "../../img/AddDocente.png";
+import actualizarDocenteImg from "../../img/actualizarUsuario.png";
 import avatar1 from "../../img/Avatar1.png";
 import avatar2 from "../../img/Avatar2.png";
 import SearchIcon from "@mui/icons-material/Search";
@@ -18,17 +19,31 @@ import { useAuthDocente } from "../../hooks/useAuthDocente";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import SensorOccupiedIcon from "@mui/icons-material/SensorOccupied";
+import { useParams } from "react-router-dom";
+import { useAuthFuncionario } from "../../hooks/useAuthFuncionario";
 
 const CreateDocente = () => {
+  const { id } = useParams();
   const {
     handleChangeBusqueda,
+    handleChange,
     buscarPersona,
     registrarDocente,
+    actualizarDocente,
     busquedaDocente,
     persona,
     estadoBusqueda,
-  } = useAuthDocente();
+    docente,
+  } = useAuthDocente(id);
+  const {funcionarios} = useAuthFuncionario();
+  
+  const titulo = id ? "Actualizar funcionario" : "Registrar funcionario";
+  const actionButton = id ? actualizarDocente : () => registrarDocente(persona.id);
+  const nameBurron = id ? "Actualizar" : "Registrar";
+  const classButton = id ? "btn-actualizar" : "btn-buscar";
+
   return (
     <div className="createDocente">
       <Sidebar />
@@ -39,9 +54,10 @@ const CreateDocente = () => {
             <div className="formulario-contenedor">
               <div className="header">
                 <figure className="imagen-header">
-                  <img src={addDocente} />
+                  {id && <img src={actualizarDocenteImg} />}
+                  {!id && <img src={addDocente} />}
                 </figure>
-                <h1>Registrar docente</h1>
+                <h1>{titulo}</h1>
               </div>
               <section className="contenido">
                 <main className="labelContent">
@@ -61,6 +77,7 @@ const CreateDocente = () => {
                       onChange={handleChangeBusqueda}
                       className="labelPersona"
                       placeholder="Buscar persona..."
+                      required
                     />
                     <button onClick={buscarPersona} className="btn-buscar">
                       <SearchIcon />
@@ -68,6 +85,105 @@ const CreateDocente = () => {
                     </button>
                   </fieldset>
                 </main>
+                {/* {identificacion && (
+                  <>
+                    <div className="resultado-persona">
+                      <section>
+                        <fieldset
+                          className="informacion-persona"
+                          style={{ border: "1px solid #570217" }}
+                        >
+                          <AssignmentIcon
+                            className="icon"
+                            style={{ color: "#570217" }}
+                          />
+                          <label>{docenteActualizar.identificacion}</label>
+                        </fieldset>
+                        <fieldset
+                          className="informacion-persona"
+                          style={{ border: "1px solid #570217" }}
+                        >
+                          <Keyboard
+                            className="icon"
+                            style={{ color: "#570217" }}
+                          />
+                          <label>{docenteActualizar.persona}</label>
+                        </fieldset>
+                        <fieldset
+                          className="informacion-persona"
+                          style={{ border: "1px solid #570217" }}
+                        >
+                          <FemaleIcon
+                            className="icon"
+                            style={{ color: "#570217" }}
+                          />
+                          <label>{docenteActualizar.telefono}</label>
+                        </fieldset>
+                        <fieldset
+                          className="informacion-persona"
+                          style={{ border: "1px solid #570217" }}
+                        >
+                          <ApartmentIcon
+                            className="icon"
+                            style={{ color: "#570217" }}
+                          />
+                          <label>{docenteActualizar.departamento}</label>
+                        </fieldset>
+                      </section>
+                      <div>
+                        <fieldset
+                          className="informacion-persona"
+                          style={{ border: "1px solid #7451F8" }}
+                        >
+                          <BadgeIcon
+                            className="icon"
+                            style={{ color: "#7451F8" }}
+                          />
+                          <label>{docenteActualizar.ciudad}</label>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <center>
+                      <hr style={{ border: "1px solid gray", width: "90%" }} />
+                    </center>
+                    <br />
+                    <center>
+                      <div className="footer">
+                        <main className="labelContent">
+                          <p
+                            style={{
+                              fontFamily: "revert-layer",
+                              fontWeight: "bold",
+                              fontSize: "18px",
+                            }}
+                          >
+                            Categoria
+                          </p>
+                          <fieldset>
+                            <label>
+                              <AccountCircleIcon
+                                style={{ margin: "0 0 0 10px" }}
+                              />
+                              Docente
+                            </label>
+                            <button
+                              className="btn-buscar"
+                              onClick={() =>
+                                registrarDocente(
+                                  persona.id,
+                                  "6881bf9c-ac52-4da5-a420-f5fed2f77168"
+                                )
+                              }
+                            >
+                              <PersonAddAlt1Icon />
+                              Actualizar
+                            </button>
+                          </fieldset>
+                        </main>
+                      </div>
+                    </center>
+                  </>
+                )} */}
                 {estadoBusqueda === "Con persona" && (
                   <>
                     <div className="resultado-persona">
@@ -122,41 +238,41 @@ const CreateDocente = () => {
                       <div>
                         <fieldset
                           className="informacion-persona"
-                          style={{ border: "1px solid #7451F8" }}
+                          style={{ border: "1px solid #377D6A" }}
                         >
                           <BadgeIcon
                             className="icon"
-                            style={{ color: "#7451F8" }}
+                            style={{ color: "#377D6A" }}
                           />
                           <label>{persona.identificacion}</label>
                         </fieldset>
                         <fieldset
                           className="informacion-persona"
-                          style={{ border: "1px solid #7451F8" }}
+                          style={{ border: "1px solid #377D6A" }}
                         >
                           <Keyboard
                             className="icon"
-                            style={{ color: "#7451F8" }}
+                            style={{ color: "#377D6A" }}
                           />
                           <label>{persona.apellido}</label>
                         </fieldset>
                         <fieldset
                           className="informacion-persona"
-                          style={{ border: "1px solid #7451F8" }}
+                          style={{ border: "1px solid #377D6A" }}
                         >
                           <LocalPhoneIcon
                             className="icon"
-                            style={{ color: "#7451F8" }}
+                            style={{ color: "#377D6A" }}
                           />
                           <label>{persona.telefono}</label>
                         </fieldset>
                         <fieldset
                           className="informacion-persona"
-                          style={{ border: "1px solid #7451F8" }}
+                          style={{ border: "1px solid #377D6A" }}
                         >
                           <MapIcon
                             className="icon"
-                            style={{ color: "#7451F8" }}
+                            style={{ color: "#377D6A" }}
                           />
                           <label>{persona.departamento.nombre}</label>
                         </fieldset>
@@ -176,26 +292,44 @@ const CreateDocente = () => {
                               fontSize: "18px",
                             }}
                           >
-                            Categoria
+                            Seleccione categoria
                           </p>
                           <fieldset>
                             <label>
                               <AccountCircleIcon
                                 style={{ margin: "0 0 0 10px" }}
                               />
-                              Docente
+                              <select
+                                name="categoriaFuncionario"
+                                id="categoriaFuncionario"
+                                required
+                                style={{ borderBottom: "1px solid #025752" }}
+                                onChange={handleChange}
+                              >
+                                {(id && <option value={docente.categoriaFuncionario.id}>{docente.categoriaFuncionario.nombre}</option>)}
+                                {(!id && <option value="">Seleccione una opcion...</option>)}
+                                {funcionarios.map((funcionario) => (
+                                  <option key={funcionario.id} value={funcionario.id}>{funcionario.nombre}</option>
+                                ))}
+                              </select>
                             </label>
                             <button
-                              className="btn-buscar"
+                              className={classButton}
                               onClick={() =>
-                                registrarDocente(
-                                  persona.id,
-                                  "6881bf9c-ac52-4da5-a420-f5fed2f77168"
-                                )
+                                actionButton()
                               }
                             >
-                              <PersonAddAlt1Icon />
-                              Registrar
+                              {id && (
+                                <SensorOccupiedIcon
+                                  style={{ margin: "0 2px 0 0" }}
+                                />
+                              )}
+                              {!id && (
+                                <PersonAddAlt1Icon
+                                  style={{ margin: "0 2px 0 0" }}
+                                />
+                              )}
+                              {nameBurron}
                             </button>
                           </fieldset>
                         </main>
@@ -230,6 +364,7 @@ const CreateDocente = () => {
                 {!(estadoBusqueda === "Con persona") &&
                   !(estadoBusqueda === "Sin persona") &&
                   !(estadoBusqueda === "Persona registrada") && (
+                    // !(identificacion) &&
                     <>
                       <div className="resultado-persona">
                         <section className="personaBuscar">
@@ -248,5 +383,4 @@ const CreateDocente = () => {
     </div>
   );
 };
-
 export default CreateDocente;

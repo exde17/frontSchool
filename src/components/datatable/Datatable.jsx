@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 export default function Datatable({
   personas,
-  loanding,
+  loading,
   eliminarPersona,
   toggleModal,
   capturarInformacion,
@@ -97,7 +97,7 @@ export default function Datatable({
         <section className="content-card-docente">
           <main className="informacion">
             <RecordVoiceOverIcon />
-            <h2>Docente</h2>
+            <h2>Funcionario</h2>
           </main>
           <Link to="/teacher">
             <button>GESTIONAR</button>
@@ -119,7 +119,7 @@ export default function Datatable({
           <button
             onClick={toggleModal}
             style={{
-              width: "13rem",
+              width: "15rem",
               textTransform: "uppercase",
               fontWeight: "bold",
             }}
@@ -131,11 +131,14 @@ export default function Datatable({
             Registrar Persona
           </button>
         </header>
+        { !loading && personas.length === 0 && 
+        <h1>Sin dato</h1>
+        }
         <section>
           <DataTable
             columns={columns}
             data={personas}
-            progressPending={loanding}
+            progressPending={loading}
             pagination
           />
         </section>

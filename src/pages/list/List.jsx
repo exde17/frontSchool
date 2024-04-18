@@ -1,15 +1,10 @@
-import "./list.css";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import Datatable from "../../components/datatable/Datatable";
-import { useAuthPersona } from "../../hooks/useAuthPersona";
 import { ModalPersona } from "../../components/datatable/ModalPersona";
+import Navbar from "../../components/navbar/Navbar";
+import Sidebar from "../../components/sidebar/Sidebar";
 import { useAuthDepartamento } from "../../hooks/useAuthDepartamento";
-import { useAuthCiudad } from "../../hooks/useAuthCiudad";
-import { useAuthCorregimiento } from "../../hooks/useAuthCorregimiento";
-import { useAuthBarrio } from "../../hooks/useAuthBarrio";
-import { useAuthVereda } from "../../hooks/useAuthVereda";
-import { useAuthComuna } from "../../hooks/useAuthComuna";
+import { useAuthPersona } from "../../hooks/useAuthPersona";
+import "./list.css";
 
 const List = () => {
   const {
@@ -17,6 +12,11 @@ const List = () => {
     loading,
     openModal,
     persona,
+    barrios,
+    ciudades,
+    corregimientos,
+    veredas,
+    comunas,
     eliminarPersona,
     toggleModal,
     handleChange,
@@ -25,13 +25,7 @@ const List = () => {
     actualizarPersona,
   } = useAuthPersona();
 
-  const {departamentos} = useAuthDepartamento();
-  const {ciudades} = useAuthCiudad();
-  const {corregimientos} = useAuthCorregimiento();
-  const {barrios} = useAuthBarrio();
-  const {veredas} = useAuthVereda();
-  const {comunas} = useAuthComuna();
-
+  const { departamentos } = useAuthDepartamento();
   const handlerChange = persona.id ? actualizarPersona : registrarPersona;
 
   return (
