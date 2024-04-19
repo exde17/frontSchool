@@ -12,13 +12,31 @@ export function useAuthDocente(idDocenteActualizar) {
   const token = localStorage.getItem("token");
   const [busquedaDocente, setBusquedaDocente] = useState("");
   const [persona, setPersona] = useState({});
-  const [docente, setDocente] = useState({});
+  const [docente, setDocente] = useState({
+    persona: "",
+    categoriaFuncionario: "",
+  });
   const [estadoBusqueda, setEstadoBusqueda] = useState("");
   const { personas } = useAuthPersona();
   const [idcategoria, setIdCategoria] = useState({
     categoriaFuncionario: "",
   });
+  const [selectedOptionPersonas, setSelectedOptionPersonas] = useState(null);
 
+  // const persons = Array.from(new Set(personas.map((persona) => persona)));
+
+  const personasNoDocentes = personas.filter(
+    (persona) => !docentes.some((docente) => docente.idPersona === persona.id)
+  );
+
+  const personaOptions = personasNoDocentes.map((persona) => ({
+    value: persona.identificacion,
+    label: persona.nombre + " " + persona.apellido,
+  }));
+
+  const handleChangeFiltro = (selectedOption) => {
+    setSelectedOptionPersonas(selectedOption);
+  };
   const handleChangeBusqueda = ({ target }) => {
     setBusquedaDocente(target.value);
   };
@@ -50,7 +68,7 @@ export function useAuthDocente(idDocenteActualizar) {
   };
 
   const buscarPersona = () => {
-    if (busquedaDocente === "") {
+    if (selectedOptionPersonas === null) {
       Swal.fire({
         icon: "info",
         title: "¡Cuidado!",
@@ -60,11 +78,11 @@ export function useAuthDocente(idDocenteActualizar) {
       });
     } else {
       const persona = personas.filter(
-        (persona) => persona.identificacion === busquedaDocente
+        (persona) => persona.identificacion === selectedOptionPersonas.value
       );
       if (persona.length > 0) {
         setPersona(persona[0]);
-        setBusquedaDocente("");
+        setSelectedOptionPersonas(null);
         setEstadoBusqueda("Con persona");
       } else {
         setEstadoBusqueda("Sin persona");
@@ -72,7 +90,6 @@ export function useAuthDocente(idDocenteActualizar) {
     }
   };
   const registrarDocente = async (id) => {
-    console.log(id, idcategoria.categoriaFuncionario);
     if (id === "" || idcategoria.categoriaFuncionario === "") {
       Swal.fire({
         icon: "info",
@@ -96,11 +113,10 @@ export function useAuthDocente(idDocenteActualizar) {
             },
           }
         );
-        console.log(data);
         if (data.data.message == "Docente creado correctamente") {
           Swal.fire({
             icon: "success",
-            title: "¡Registrado como docente!",
+            title: "Funcionario registrado!",
             text: "Registro exitoso...",
             showConfirmButton: false,
             timer: 2000,
@@ -113,7 +129,7 @@ export function useAuthDocente(idDocenteActualizar) {
           Swal.fire({
             icon: "warning",
             title: "¡No completado!",
-            text: "Ya existe un docente con estos datos...",
+            text: "Ya existe un funcionario con estos datos...",
             showConfirmButton: false,
             timer: 2000,
           });
@@ -176,7 +192,6 @@ export function useAuthDocente(idDocenteActualizar) {
   const buscarDocenteActualizar = async () => {
     if (idDocenteActualizar !== undefined) {
       const data = await consultarDocente(idDocenteActualizar);
-      console.log(data);
       if (data) {
         setPersona(data.persona);
         setDocente(data);
@@ -197,7 +212,7 @@ export function useAuthDocente(idDocenteActualizar) {
         const data = await axios.patch(
           "https://render-school.onrender.com/api/docente/" +
             idDocenteActualizar,
-          docenteActualizar,
+            docenteActualizar,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -208,10 +223,11 @@ export function useAuthDocente(idDocenteActualizar) {
           Swal.fire({
             icon: "success",
             title: "¡Actualizado!",
-            text: "Docente actualizado...",
+            text: "Funcionario actualizado...",
             showConfirmButton: false,
             timer: 2000,
           });
+          navigate("/teacher");
         }
       } catch (error) {
         console.error(error);
@@ -249,7 +265,7 @@ export function useAuthDocente(idDocenteActualizar) {
           Swal.fire({
             icon: "success",
             title: "¡Actualizado!",
-            text: "Docente actualizado...",
+            text: "Funcionario actualizado...",
             showConfirmButton: false,
             timer: 2000,
           });
@@ -258,7 +274,7 @@ export function useAuthDocente(idDocenteActualizar) {
           Swal.fire({
             icon: "info",
             title: "¡Cuidado!",
-            text: "Esta persona ya esta asignada como docente...",
+            text: "Esta persona ya tiene un cargo definido..",
             showConfirmButton: false,
             timer: 2000,
           });
@@ -294,11 +310,14 @@ export function useAuthDocente(idDocenteActualizar) {
     persona,
     docente,
     estadoBusqueda,
+    personaOptions,
+    selectedOptionPersonas,
     handleChangeBusqueda,
     buscarPersona,
     registrarDocente,
     eliminarDocente,
     actualizarDocente,
     handleChange,
+    handleChangeFiltro,
   };
 }

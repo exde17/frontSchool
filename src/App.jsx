@@ -35,6 +35,7 @@ import ViewAsignatura from "./components/asignatura/ViewAsignatura.jsx";
 import EditAsignatura from "./components/asignatura/EditAsignatura.jsx";
 import DeleteAsignatura from "./components/asignatura/DeleteAsignatura.jsx";
 import CreateAcudiente from "./components/createacudiente/CreateAcudiente.jsx";
+import ViewAcudiente from "./components/createacudiente/ViewAcudiente.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -73,7 +74,7 @@ function App() {
           </Route>
           <Route path="attendant">
             <Route index element={<ListAcudiente />} />
-            <Route path="view/:id" element={<ViewDocente />} />
+            <Route path="view/:id" element={<ViewAcudiente />} />
             <Route path="new" element={<CreateAcudiente />} />
             <Route path="new/:id" element={<CreateAcudiente />} />
             <Route path="edit/:id" element={<EditDocente />} />

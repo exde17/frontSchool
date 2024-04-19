@@ -46,7 +46,6 @@
 }
 
 .itemImg{
-    background-image: url("/src/img/Perfil.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 100% 50%;

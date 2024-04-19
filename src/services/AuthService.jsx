@@ -158,3 +158,14 @@ export const consultarAcudiente = async (id) => {
   );
   return data.data;
 };
+export const consultarPersona = async (id) => {
+  const data = await axios.get(
+    "https://render-school.onrender.com/api/persona/" + id,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return data.data;
+}

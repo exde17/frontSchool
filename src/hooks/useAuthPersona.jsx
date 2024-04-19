@@ -1,14 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { consultarPersonas } from "../services/AuthService";
+import { consultarPersona, consultarPersonas } from "../services/AuthService";
 import { useAuthBarrio } from "./useAuthBarrio";
 import { useAuthComuna } from "./useAuthComuna";
 import { useAuthCorregimiento } from "./useAuthCorregimiento";
 import { useAuthVereda } from "./useAuthVereda";
 import { useAuthCiudad } from "./useAuthCiudad";
 
-export function useAuthPersona() {
+export function useAuthPersona(idPersona) {
   const { ciudades } = useAuthCiudad();
   const { corregimientos } = useAuthCorregimiento();
   const { barrios } = useAuthBarrio();
@@ -223,6 +223,13 @@ export function useAuthPersona() {
     setPersona(persona);
   };
 
+  const buscarPersona = async () => {
+    if (idPersona !== undefined) {
+      const data = await consultarPersona(idPersona);
+      setPersona(data);
+    }
+  };
+
   const actualizarPersona = async () => {
     const personaActualizar = {
       nombre: persona.nombre,
@@ -282,11 +289,12 @@ export function useAuthPersona() {
   };
 
   const filtrarCiudad = () => {
-      //  ciudades = ciudades.filter(ciudad => ciudad. === persona.ciudad)
-  }
+    //  ciudades = ciudades.filter(ciudad => ciudad. === persona.ciudad)
+  };
 
   useEffect(() => {
     cargarPersonas();
+    buscarPersona();
   }, []);
 
   return {

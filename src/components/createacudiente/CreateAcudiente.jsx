@@ -6,7 +6,6 @@ import addDocente from "../../img/AddDocente.png";
 import actualizarDocenteImg from "../../img/actualizarUsuario.png";
 import avatar1 from "../../img/Avatar1.png";
 import avatar2 from "../../img/Avatar2.png";
-import SearchIcon from "@mui/icons-material/Search";
 import { Keyboard } from "@mui/icons-material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -15,30 +14,35 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import MapIcon from "@mui/icons-material/Map";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import { useAuthDocente } from "../../hooks/useAuthDocente";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import SensorOccupiedIcon from "@mui/icons-material/SensorOccupied";
 import { useParams } from "react-router-dom";
-import { useAuthFuncionario } from "../../hooks/useAuthFuncionario";
 import { useAuthAcudiente } from "../../hooks/useAuthAcudiente";
+import CreatableSelect from "react-select/creatable";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const CreateAcudiente = () => {
   const { id } = useParams();
   const {
     handleChangeBusqueda,
     handleChange,
-    buscarPersona,
     busquedaAcudiente,
     estadoBusqueda,
     persona,
+    personaOptions,
+    selectedOptionPersonas,
+    handleChangeFiltro,
+    registrarAcudiente,
+    buscarPersona,
+    actualizarAcudiente,
   } = useAuthAcudiente(id);
-  const { funcionarios } = useAuthFuncionario();
-
   const titulo = id ? "Actualizar acudiente" : "Registrar acudiente";
-  // const actionButton = id ? actualizarDocente : () => registrarDocente(persona.id);
+  const actionButton = id
+    ? actualizarAcudiente
+    : () => registrarAcudiente(persona.id);
   const nameBurron = id ? "Actualizar" : "Registrar";
   const classButton = id ? "btn-actualizar" : "btn-buscar";
 
@@ -69,18 +73,27 @@ const CreateAcudiente = () => {
                     Digite la cedula de la persona
                   </p>
                   <fieldset>
-                    <input
-                      type="number"
-                      value={busquedaAcudiente}
-                      onChange={handleChangeBusqueda}
-                      className="labelPersona"
-                      placeholder="Buscar persona..."
-                      required
+                    <CreatableSelect
+                      isClearable
+                      options={personaOptions}
+                      placeholder="Seleccione la persona..."
+                      className="filter-select"
+                      classNamePrefix="filter-select"
+                      onChange={(selectedOption) =>
+                        handleChangeFiltro(selectedOption)
+                      }
+                      value={selectedOptionPersonas}
+                      noOptionsMessage={() => "¡Sin personas para crear un acudiente!"}
                     />
-                    <button onClick={buscarPersona} className="btn-buscar">
-                      <SearchIcon />
-                      Buscar
-                    </button>
+                    {selectedOptionPersonas === null && (
+                      <VisibilityOffIcon style={{ margin: "9px 15px 0 0" }} />
+                    )}
+                    {selectedOptionPersonas !== null && (
+                      <button onClick={buscarPersona} className="btn-buscar">
+                        <VisibilityIcon style={{ margin: "0 5px 0 0" }} />
+                        Ver
+                      </button>
+                    )}
                   </fieldset>
                 </main>
                 {/* {identificacion && (
@@ -281,56 +294,12 @@ const CreateAcudiente = () => {
                     </center>
                     <br />
                     <center>
-                      <div className="footer">
+                      <div className="footer2">
                         <main className="labelContent">
-                          <p
-                            style={{
-                              fontFamily: "revert-layer",
-                              fontWeight: "bold",
-                              fontSize: "18px",
-                            }}
-                          >
-                            Seleccione categoria
-                          </p>
                           <fieldset>
-                            <label>
-                              <AccountCircleIcon
-                                style={{ margin: "0 0 0 10px" }}
-                              />
-                              <select
-                                name="categoriaFuncionario"
-                                id="categoriaFuncionario"
-                                required
-                                style={{ borderBottom: "1px solid #025752" }}
-                                onChange={handleChange}
-                              >
-                                {id && (
-                                  <option
-                                    value={docente.categoriaFuncionario.id}
-                                  >
-                                    {docente.categoriaFuncionario.nombre}
-                                  </option>
-                                )}
-                                {!id && (
-                                  <option value="">
-                                    Seleccione una opcion...
-                                  </option>
-                                )}
-                                {funcionarios.map((funcionario) => (
-                                  <option
-                                    key={funcionario.id}
-                                    value={funcionario.id}
-                                  >
-                                    {funcionario.nombre}
-                                  </option>
-                                ))}
-                              </select>
-                            </label>
                             <button
                               className={classButton}
-                              // onClick={() =>
-                              //   actionButton()
-                              // }
+                              onClick={() => actionButton()}
                             >
                               {id && (
                                 <SensorOccupiedIcon

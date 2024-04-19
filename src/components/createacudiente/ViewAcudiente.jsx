@@ -1,10 +1,97 @@
-import React from 'react'
-import './viewasignatura.css';
+import { useParams } from "react-router-dom";
+import "./viewacudiente.css";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
+import avatar1 from "../../img/Avatar1.png";
+import avatar2 from "../../img/Avatar2.png";
+import { useAuthAcudiente } from "../../hooks/useAuthAcudiente";
 
-const ViewAsignatura = () => {
+const ViewAcudiente = () => {
+  const { id } = useParams();
+  const { acudiente } = useAuthAcudiente(id);
   return (
-    <div>ViewAsignatura</div>
-  )
-}
+    <div className="viewDocente">
+      <Sidebar />
+      <div className="viewContainer">
+        <Navbar />
+        <div className="arriba">
+          <div className="left">
+            <div className="editButton">Editar</div>
+            <h1 className="titulo">Informacion</h1>
+            <div className="item">
+              {acudiente.persona.genero === "Masculino" && (
+                <img
+                  src={avatar1}
+                  className="itemImg"
+                  style={{ width: "100px" }}
+                />
+              )}
+              {acudiente.persona.genero === "Femenino" && (
+                <img src={avatar2} className="itemImg" />
+              )}
+              <div className="detalles">
+                <h1 className="nombre" id="nombre">
+                  Acudiente
+                </h1>
+                <div className="detailItem">
+                  <span className="itemKey">Nombre:</span>
+                  <span className="itemValue" id="persona">
+                    {acudiente.persona.nombre}
+                  </span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Apellido:</span>
+                  <span className="itemValue" id="persona">
+                    {acudiente.persona.apellido}
+                  </span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Tipo identificacion:</span>
+                  <span className="itemValue" id="identificacion">
+                    {acudiente.persona.tipoIdentificacion}
+                  </span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Identificacion</span>
+                  <span className="itemValue" id="identificacion">
+                    {acudiente.persona.identificacion}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="right">
+            <div className="editButton">Editar</div>
+            <h1 className="titulo">Informacion Institucion</h1>
+            <div className="item">
+              <div className="detalles">
+                <h1 className="nombre">I. E. los Colores</h1>
+                <div className="detailItem">
+                  <span className="itemKey">Grado actual</span>
+                  <span className="itemValue">1° Primero</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Acudiente</span>
+                  <span className="itemValue">Margarita sanchez</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Telfono</span>
+                  <span className="itemValue">+57 322 354 5655</span>
+                </div>
+                <div className="detailItem">
+                  <span className="itemKey">Ciudad</span>
+                  <span className="itemValue">Monteria -</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bottom">
+          <h1 className="calificaciones">Calificaciones</h1>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default ViewAsignatura
+export default ViewAcudiente;

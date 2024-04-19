@@ -1,9 +1,9 @@
-.single{
+.viewStudent{
     display: flex;
     width: 100%;
 }
 
-.singleContainer{
+.viewContainer{
     flex: 6;
 }
 
@@ -17,7 +17,7 @@
     flex: 1.6;
     -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-    padding: 20px;
+    padding: 40px;
     position: relative;
 }
 
@@ -46,12 +46,11 @@
 }
 
 .itemImg{
-    background-image: url("/src/img/Perfil.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 100% 50%;
-    width: 100px;
-    height: 100px;
+    width: 60px !important;
+    height: 60px !important;
     border-radius: 50%;
 }
 
@@ -87,7 +86,7 @@
 }
 
 
-.single .singleContainer .bottom{
+.viewStudent .viewContainer .bottom{
     display: block;
     -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
     box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
@@ -97,7 +96,7 @@
 
 }
 
-.single .singleContainer .bottom .calificaciones{
+.viewStudent .viewContainer .bottom .calificaciones{
     padding: 40px 40px 5px;
     font-size: 20px;
     color: gray;

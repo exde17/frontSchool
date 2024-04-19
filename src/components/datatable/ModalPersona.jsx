@@ -465,7 +465,6 @@ export function ModalPersona({
                     id="ciudad"
                     style={{ borderBottom: "1px solid #CA8333" }}
                     onChange={handleChange}
-                    disabled
                   >
                     <option value="">Seleccione ciudad...</option>
                     {ciudades.map((ciudad) => (

@@ -32,7 +32,7 @@ const DatatableAcudiente = ({ acudientes, loading, eliminarDocente }) => {
               <EditIcon style={{ marginTop: "4px", color: "blue" }} />
             </button>
           </Link>
-          <Link to={`/users/test/${row.id}`}>
+          <Link to={`/attendant/view/${row.id}`}>
             <button
               style={{ border: "none", cursor: "pointer", background: "none" }}
             >

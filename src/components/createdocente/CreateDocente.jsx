@@ -6,7 +6,6 @@ import addDocente from "../../img/AddDocente.png";
 import actualizarDocenteImg from "../../img/actualizarUsuario.png";
 import avatar1 from "../../img/Avatar1.png";
 import avatar2 from "../../img/Avatar2.png";
-import SearchIcon from "@mui/icons-material/Search";
 import { Keyboard } from "@mui/icons-material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -23,6 +22,9 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import SensorOccupiedIcon from "@mui/icons-material/SensorOccupied";
 import { useParams } from "react-router-dom";
 import { useAuthFuncionario } from "../../hooks/useAuthFuncionario";
+import Select from "react-select/creatable";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const CreateDocente = () => {
   const { id } = useParams();
@@ -32,15 +34,19 @@ const CreateDocente = () => {
     buscarPersona,
     registrarDocente,
     actualizarDocente,
-    busquedaDocente,
+    handleChangeFiltro,
     persona,
     estadoBusqueda,
     docente,
+    personaOptions,
+    selectedOptionPersonas,
   } = useAuthDocente(id);
-  const {funcionarios} = useAuthFuncionario();
-  
+  const { funcionarios } = useAuthFuncionario();
+
   const titulo = id ? "Actualizar funcionario" : "Registrar funcionario";
-  const actionButton = id ? actualizarDocente : () => registrarDocente(persona.id);
+  const actionButton = id
+    ? actualizarDocente
+    : () => registrarDocente(persona.id);
   const nameBurron = id ? "Actualizar" : "Registrar";
   const classButton = id ? "btn-actualizar" : "btn-buscar";
 
@@ -68,21 +74,30 @@ const CreateDocente = () => {
                       fontSize: "18px",
                     }}
                   >
-                    Digite la cedula de la persona
+                    Ver persona
                   </p>
                   <fieldset>
-                    <input
-                      type="number"
-                      value={busquedaDocente}
-                      onChange={handleChangeBusqueda}
-                      className="labelPersona"
-                      placeholder="Buscar persona..."
-                      required
+                    <Select
+                      isClearable
+                      options={personaOptions}
+                      placeholder="Seleccione la persona..."
+                      className="filter-select"
+                      classNamePrefix="filter-select"
+                      onChange={(selectedOption) =>
+                        handleChangeFiltro(selectedOption)
+                      }
+                      value={selectedOptionPersonas}
+                      noOptionsMessage={() => "¡Sin personas para crear un funcionario!"}
                     />
-                    <button onClick={buscarPersona} className="btn-buscar">
-                      <SearchIcon />
-                      Buscar
-                    </button>
+                    {selectedOptionPersonas === null && (
+                      <VisibilityOffIcon style={{ margin: "9px 15px 0 0" }} />
+                    )}
+                    {selectedOptionPersonas !== null && (
+                      <button onClick={buscarPersona} className="btn-buscar">
+                        <VisibilityIcon style={{ margin: "0 5px 0 0" }} />
+                        Ver
+                      </button>
+                    )}
                   </fieldset>
                 </main>
                 {/* {identificacion && (
@@ -306,18 +321,31 @@ const CreateDocente = () => {
                                 style={{ borderBottom: "1px solid #025752" }}
                                 onChange={handleChange}
                               >
-                                {(id && <option value={docente.categoriaFuncionario.id}>{docente.categoriaFuncionario.nombre}</option>)}
-                                {(!id && <option value="">Seleccione una opcion...</option>)}
+                                {id && (
+                                  <option
+                                    value={docente.categoriaFuncionario.id}
+                                  >
+                                    {docente.categoriaFuncionario.nombre}
+                                  </option>
+                                )}
+                                {!id && (
+                                  <option value="">
+                                    Seleccione una opcion...
+                                  </option>
+                                )}
                                 {funcionarios.map((funcionario) => (
-                                  <option key={funcionario.id} value={funcionario.id}>{funcionario.nombre}</option>
+                                  <option
+                                    key={funcionario.id}
+                                    value={funcionario.id}
+                                  >
+                                    {funcionario.nombre}
+                                  </option>
                                 ))}
                               </select>
                             </label>
                             <button
                               className={classButton}
-                              onClick={() =>
-                                actionButton()
-                              }
+                              onClick={() => actionButton()}
                             >
                               {id && (
                                 <SensorOccupiedIcon

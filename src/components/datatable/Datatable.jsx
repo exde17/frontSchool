@@ -140,6 +140,7 @@ export default function Datatable({
             data={personas}
             progressPending={loading}
             pagination
+            fixedHeader
           />
         </section>
       </div>
