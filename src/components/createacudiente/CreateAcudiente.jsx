@@ -70,7 +70,7 @@ const CreateAcudiente = () => {
                       fontSize: "18px",
                     }}
                   >
-                    Digite la cedula de la persona
+                    Seleccione el nombre de la persona
                   </p>
                   <fieldset>
                     <CreatableSelect
@@ -91,7 +91,7 @@ const CreateAcudiente = () => {
                     {selectedOptionPersonas !== null && (
                       <button onClick={buscarPersona} className="btn-buscar">
                         <VisibilityIcon style={{ margin: "0 5px 0 0" }} />
-                        Ver
+                        Ver persona
                       </button>
                     )}
                   </fieldset>

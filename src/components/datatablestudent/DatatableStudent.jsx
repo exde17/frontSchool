@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import DataTable from "react-data-table-component";
 import "./datatable.css";
 import { Link } from "react-router-dom";
-import { DataGrid } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import CreateAcudiente from "../createacudiente/CreateAcudiente";
 import PersonIcon from "@mui/icons-material/Person";
 import SchoolIcon from "@mui/icons-material/School";
 import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
@@ -107,24 +103,24 @@ const DatatableStudent = ({ estudiantes, loading, eliminarEstudiante }) => {
       </div>
       <div className="container_levels">
         <header>
-          <button
-            // onClick={toggleModal}
-            style={{
-              width: "15rem",
-              textTransform: "uppercase",
-              fontWeight: "bold",
-            }}
-          >
-            <PersonAddAlt1Icon
-              className="icon-registrar"
-              style={{ margin: "0 1px 0 0" }}
-            />
-            Registrar estudiante
-          </button>
+          <Link to="/student/new" style={{ textDecoration: "none" }}>
+            <button
+              // onClick={toggleModal}
+              style={{
+                width: "15rem",
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
+            >
+              <PersonAddAlt1Icon
+                className="icon-registrar"
+                style={{ margin: "0 1px 0 0" }}
+              />
+              Registrar estudiante
+            </button>
+          </Link>
         </header>
-        { !loading && estudiantes.length === 0 &&
-        <h1>Sin dato</h1>
-        }
+        {!loading && estudiantes.length === 0 && <h1>Sin datos</h1>}
         <section>
           <DataTable
             columns={columns}
@@ -133,7 +129,6 @@ const DatatableStudent = ({ estudiantes, loading, eliminarEstudiante }) => {
             pagination
           />
         </section>
-        
       </div>
     </div>
   );

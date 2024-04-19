@@ -74,7 +74,7 @@ const CreateDocente = () => {
                       fontSize: "18px",
                     }}
                   >
-                    Ver persona
+                    Seleccione el nombre de la persona
                   </p>
                   <fieldset>
                     <Select
@@ -95,7 +95,7 @@ const CreateDocente = () => {
                     {selectedOptionPersonas !== null && (
                       <button onClick={buscarPersona} className="btn-buscar">
                         <VisibilityIcon style={{ margin: "0 5px 0 0" }} />
-                        Ver
+                        Ver persona
                       </button>
                     )}
                   </fieldset>
